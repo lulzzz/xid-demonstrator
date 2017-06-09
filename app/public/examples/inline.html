@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>xID Connect - Inline Example</title>
+    <style>
+        #auth {
+            width: 400px;
+            height: 320px;
+        }
+    </style>
+</head>
+<body>
+
+<button>Logg inn med xID</button>
+
+<a class="logout" href="">Logg ut</a>
+<a class="reset" href="">Slett xID</a>
+
+<article id="auth"></article>
+
+<script type="text/javascript">
+    function onXIDLoaded() {
+        // Initialise xID with required parameters
+        window.XID.doInit({
+            // Merchant given client ID on the xID service
+            // NOTE: set client secret for "default" in config.json
+            client_id: '{data_xidClientId}',
+            // The resource scopes merchant want to gain access to for the user
+            scope: 'openid address',
+            // Implementation method, open the session in a new window
+            method: 'inline',
+            redirect_uri: '{data_xidOauthRedirectUri}',
+            oauth_url: '{data_xidOauthEndpoint}',
+            token_endpoint: '{data_xidOauthTokenUrl}',
+            userinfo_endpoint: '{data_xidOauthUserInfoUrl}'
+        });
+    }
+
+    function onXIDButtonClick() {
+        window.XID.doConnect({
+            callback: function( err, data ) {
+                console.log(err);
+                console.log('doConnect callback', data);
+                window.XID.doGetUserInfo( function (err, user) {
+                    console.log(err);
+                    console.log('doGetUserInfo callback', user);
+                });
+            },
+            inlineElementID: 'auth'
+        });
+    }
+
+    function onXIDLogoutClick() {
+        window.XID.doLogout();
+    }
+
+    function onXIDResetClick() {
+        window.XID.doReset();
+    }
+
+    var button = document.querySelector('button');
+    var logout = document.querySelector('a.logout');
+    var reset = document.querySelector('a.reset');
+
+    button.addEventListener('click', onXIDButtonClick, false);
+    logout.addEventListener('click', onXIDLogoutClick, false);
+    reset.addEventListener('click', onXIDResetClick, false);
+    document.body.addEventListener( 'xid-loaded', onXIDLoaded, false);
+</script>
+<script async defer src="{xidConnectJs}"></script>
+
+</body>
+</html>
