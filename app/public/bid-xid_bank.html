@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <title>Vesterfjell Sparebank - BankID - xID POC</title>
+    <link rel="stylesheet" href="css/bid-xid_bank.css">
+</head>
+<body data-bind="{css: {'is-logged-in': 'user.isLoggedIn'}}">
+
+<nav>
+    <div class="logo-wrapper">
+        <img class="logo" alt="Vesterfjell" src="img/bank/vesterfjell_logo.png"/>
+    </div>
+    <div class="navigation-wrapper">
+        <div class="links-wrapper">
+            <button class="link" data-page="main">Start</button>
+            <button class="link" data-page="overview" data-bind="{css: {'!hidden': 'user.isLoggedIn'}}">Oversikt</button>
+            <button class="link" data-page="contact">Kontakt</button>
+        </div>
+        <div class="login-wrapper">
+            <button class="link" id="login-button" data-page="login">Logg inn</button>
+            <button class="link" id="logout-button" data-page="logout">Logg ut</button>
+        </div>
+    </div>
+    <div class="menu-wrapper">
+        <button id="menu-button"><img alt="Menu" src="img/bank/menu.png"/></button>
+        <button id="close-menu-button"><img alt="Menu" src="img/bank/close.png"/></button>
+    </div>
+</nav>
+
+<main>
+    <!-- MAIN PAGE -->
+    <section data-page-id="main" id="main-page">
+        <div class="main-wrapper">
+            <div class="text-wrapper">
+                <div>
+                    <h1>Fjell lyt du yver<br/>skal du koma lenger.</h1>
+
+                    <div>Olav H. Hauge</div>
+
+                    <div class="login-wrapper">
+                        <button class="button-with-background" data-page="login" data-bind="{css: {'hidden': 'user.isLoggedIn'}}">Logg inn</button>
+                        <button class="button-with-background" data-page="overview" data-bind="{css: {'!hidden': 'user.isLoggedIn'}}">Oversikt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /MAIN PAGE -->
+
+    <!-- LOGIN PAGE -->
+    <section data-page-id="login" id="login-page">
+        <article class="main">
+            <div class="main-wrapper">
+                <div class="header">
+                    <h1>Logg inn</h1>
+                </div>
+                <div class="main">
+                    <p id="login-message"></p>
+                </div>
+                <div class="footer">
+                    <button class="button-primary hidden" id="start-login-button">Start autentisering</button>
+                </div>
+            </div>
+        </article>
+        <article class="client" id="authenticate-client"></article>
+        <article class="sidebar">
+            <div class="box">
+                <h1>Tips</h1>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt porta justo nec hendrerit.
+                    Praesent nec est placerat felis tempus pulvinar.</p>
+
+                <p>Nulla facilisi. Fusce ullamcorper odio a orci aliquet feugiat. Maecenas fermentum est non mauris
+                    suscipit porttitor eu vel neque. Aenean mattis vitae leo vel efficitur. Duis aliquet tortor elit, et
+                    volutpat turpis maximus at.</p>
+
+                <p>In ex massa, rhoncus sed rutrum vel, rutrum sed orci. Quisque quam
+                    felis, volutpat quis lorem vitae, egestas tristique felis. Fusce vitae sem ex. Donec et maximus
+                    metus.</p>
+            </div>
+        </article>
+    </section>
+    <!-- /LOGIN PAGE -->
+
+    <!-- LOGOUT  PAGE -->
+    <section data-page-id="logout" id="logout-page">
+    </section>
+    <!-- /LOGOUT PAGE -->
+
+    <!-- OVERVIEW PAGE -->
+    <section data-page-id="overview" id="overview-page">
+        <article class="main" id="overview-main">
+            <div class="main-wrapper">
+                <div class="header">
+                    <h1>Oversikt</h1>
+                </div>
+                <div class="main">
+                    <div class="form">
+                        <div class="form__bar-container">
+                            <table class="form__bar">
+                                <tbody>
+                                <td class="form__bar__item form__bar__item--bar">
+                                    <div class="form__bar__item__fill" style="height: 100px;"></div>
+                                </td>
+                                <td class="form__bar__item form__bar__item--bar">
+                                    <div class="form__bar__item__fill" style="height: 60px;"></div>
+                                </td>
+                                <td class="form__bar__item form__bar__item--bar">
+                                    <div class="form__bar__item__fill" style="height: 30px;"></div>
+                                </td>
+                                <td class="form__bar__item form__bar__item--bar">
+                                    <div class="form__bar__item__fill" style="height: 75px;"></div>
+                                </td>
+                                <td class="form__bar__item form__bar__item--bar">
+                                    <div class="form__bar__item__fill" style="height: 55px;"></div>
+                                </td>
+                                <td class="form__bar__item form__bar__item--bar">
+                                    <div class="form__bar__item__fill" style="height: 20px;"></div>
+                                </td>
+                                <td class="form__bar__item form__bar__item--bar">
+                                    <div class="form__bar__item__fill" style="height: 80px;"></div>
+                                </td>
+                                </tbody>
+                                <tfoot>
+                                <td class="form__bar__item form__bar__item--text">M</td>
+                                <td class="form__bar__item form__bar__item--text">T</td>
+                                <td class="form__bar__item form__bar__item--text">O</td>
+                                <td class="form__bar__item form__bar__item--text">T</td>
+                                <td class="form__bar__item form__bar__item--text">F</td>
+                                <td class="form__bar__item form__bar__item--text">L</td>
+                                <td class="form__bar__item form__bar__item--text">S</td>
+                                </tfoot>
+                            </table>
+
+                            <div class="form__bar-stripes">
+                                <div class="form__bar-stripes__line" style="top: 0;"></div>
+                                <div class="form__bar-stripes__line" style="top: 33%;"></div>
+                                <div class="form__bar-stripes__line" style="top: 66%;"></div>
+                                <div class="form__bar-stripes__line" style="top: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="input-dropdown-wrapper">
+                            <div class="input">
+                                <div class="left">
+                                    <div class="text">Fra brukskonto</div>
+                                    <div class="subtext">123.56.7890</div>
+                                </div>
+                                <div class="right">
+                                    <div class="secondary">Disp 12 543,-</div>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+
+                        <div class="input-dropdown-wrapper">
+                            <div class="input">
+                                <div class="left">
+                                    <div class="text">Til sparekonto</div>
+                                    <div class="subtext">123.56.7891</div>
+                                </div>
+                                <div class="right">
+                                    <div class="secondary">Disp 98 765,-</div>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+
+                        <div id="amount-input" class="input-double-wrapper">
+                            <div class="input input--placeholder">Sum</div>
+                            <div class="input input--placeholder secondary">00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <button class="button-primary">Gjør overføring</button>
+                    <button class="button-primary">Kontobevegelser</button>
+                </div>
+            </div>
+        </article>
+        <article class="sidebar">
+            <div class="box">
+                <h1>Oppgjørstider</h1>
+
+                <p>Tidspunktene er omtrentlige:</p>
+
+                <p>Hverdager 00:25, 09:30, 12:00 og 13:50</p>
+
+                <p>Godskriving av konto:<br/>Hverdager 05:30, 11:00, 13:30 og 15:30</p>
+            </div>
+            <div class="box">
+                <h1>Tips</h1>
+
+                <p>Skal du betale inn på kredittkortet ditt? Gåt til Mine kort og Betale inn på kredittkort for å få
+                    riktig kontonummer og KID-nummer for ditt kort.</p>
+
+                <p>Innbetalingen skal være registrert på kortet innen 1 til 2 virkedager.</p>
+            </div>
+        </article>
+    </section>
+    <!-- /OVERVIEW PAGE -->
+
+    <!-- CONTACT PAGE -->
+    <section data-page-id="contact" id="contact-page">
+        <article class="main" id="contact-main">
+            <div class="main-wrapper">
+                <div class="main">
+                    <h1>Kontakt</h1>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt porta justo nec hendrerit.
+                        Praesent nec est placerat felis tempus pulvinar.</p>
+
+                    <p>Nulla facilisi. Fusce ullamcorper odio a orci aliquet feugiat. Maecenas fermentum est non mauris
+                        suscipit porttitor eu vel neque. Aenean mattis vitae leo vel efficitur. Duis aliquet tortor elit, et
+                        volutpat turpis maximus at.</p>
+
+                    <p>In ex massa, rhoncus sed rutrum vel, rutrum sed orci. Quisque quam
+                        felis, volutpat quis lorem vitae, egestas tristique felis. Fusce vitae sem ex. Donec et maximus
+                        metus.</p>
+                </div>
+            </div>
+        </article>
+    </section>
+    <!-- /CONTACT PAGE -->
+
+</main>
+
+<script src="{xidConnectJs}"></script>
+<script src="js/bid-xid_bank.bundle.js"></script>
+
+</body>
+</html>

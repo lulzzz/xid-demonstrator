@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:xid="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+    <title>Nettbutikk - BankID - xID POC</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/bid-xid_store.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header__container">
+        <div class="header__container--left header__logo">
+            <img class="header__logo"
+                 src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjE4NyIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDE4NyAzMiI+PHN0eWxlPi5zdDB7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMl8pfS5zdDF7Y2xpcC1wYXRoOnVybCgjU1ZHSURfNF8pO2ZpbGw6I2ZmZn0uc3Qye2NsaXAtcGF0aDp1cmwoI1NWR0lEXzZfKX0uc3Qze2NsaXAtcGF0aDp1cmwoI1NWR0lEXzhfKTtmaWxsOiNmZmZ9LnN0NHtjbGlwLXBhdGg6dXJsKCNTVkdJRF8xMF8pfS5zdDV7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMTJfKTtmaWxsOiNmZmZ9LnN0NntjbGlwLXBhdGg6dXJsKCNTVkdJRF8xNF8pfS5zdDd7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMTZfKTtmaWxsOiNmZmZ9LnN0OHtjbGlwLXBhdGg6dXJsKCNTVkdJRF8xOF8pfS5zdDl7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMjBfKTtmaWxsOiNmZmZ9LnN0MTB7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMjJfKX0uc3QxMXtjbGlwLXBhdGg6dXJsKCNTVkdJRF8yNF8pO2ZpbGw6I2ZmZn0uc3QxMntjbGlwLXBhdGg6dXJsKCNTVkdJRF8yNl8pfS5zdDEze2NsaXAtcGF0aDp1cmwoI1NWR0lEXzI4Xyk7ZmlsbDojZmZmfS5zdDE0e2NsaXAtcGF0aDp1cmwoI1NWR0lEXzMwXyl9LnN0MTV7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMzJfKTtmaWxsOiNmZmZ9LnN0MTZ7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMzRfKX0uc3QxN3tjbGlwLXBhdGg6dXJsKCNTVkdJRF8zNl8pO2ZpbGw6I2ZmZn0uc3QxOHtjbGlwLXBhdGg6dXJsKCNTVkdJRF8zOF8pfS5zdDE5e2NsaXAtcGF0aDp1cmwoI1NWR0lEXzQwXyk7ZmlsbDojZmZmfS5zdDIwe2NsaXAtcGF0aDp1cmwoI1NWR0lEXzQyXyl9LnN0MjF7Y2xpcC1wYXRoOnVybCgjU1ZHSURfNDRfKTtmaWxsOiNmZmZ9LnN0MjJ7Y2xpcC1wYXRoOnVybCgjU1ZHSURfNDZfKX0uc3QyM3tjbGlwLXBhdGg6dXJsKCNTVkdJRF80OF8pO2ZpbGw6I2ZmZn0uc3QyNHtjbGlwLXBhdGg6dXJsKCNTVkdJRF81MF8pfS5zdDI1e2NsaXAtcGF0aDp1cmwoI1NWR0lEXzUyXyk7ZmlsbDojZmZmfS5zdDI2e2NsaXAtcGF0aDp1cmwoI1NWR0lEXzU0Xyl9LnN0Mjd7Y2xpcC1wYXRoOnVybCgjU1ZHSURfNTZfKTtmaWxsOiNmZmZ9PC9zdHlsZT48ZGVmcz48cGF0aCBpZD0iU1ZHSURfMV8iIGQ9Ik04LjggNy4ydjkuN0wyLjkgNy4ySDB2MTQuNmgyLjd2LTkuNWw1LjkgOS41aDNWNy4yeiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgb3ZlcmZsb3c9InZpc2libGUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF8yXyI+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48ZyBjbGFzcz0ic3QwIj48ZGVmcz48cGF0aCBpZD0iU1ZHSURfM18iIGQ9Ik0tMTk3LTI5Mmg3NjN2NTc0aC03NjN6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzNfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfNF8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzNfIiBvdmVyZmxvdz0idmlzaWJsZSIvPjwvY2xpcFBhdGg+PHBhdGggY2xhc3M9InN0MSIgZD0iTS01IDIuMmgyMS42djI0LjZILTV6Ii8+PC9nPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF81XyIgZD0iTTE0LjcgMjEuOFY3LjJoMTAuOHYyLjVoLTcuOXYzLjJoNy4zdjIuNWgtNy4zdjMuOWg4LjJ2Mi41eiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF81XyIgb3ZlcmZsb3c9InZpc2libGUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF82XyI+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfNV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48ZyBjbGFzcz0ic3QyIj48ZGVmcz48cGF0aCBpZD0iU1ZHSURfN18iIGQ9Ik0tMTk3LTI5Mmg3NjN2NTc0aC03NjN6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzdfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfOF8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzdfIiBvdmVyZmxvdz0idmlzaWJsZSIvPjwvY2xpcFBhdGg+PHBhdGggY2xhc3M9InN0MyIgZD0iTTkuNyAyLjJoMjEuMXYyNC42SDkuN3oiLz48L2c+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzlfIiBkPSJNMzEuNSAyMS44VjkuN2gtNC4zVjcuMmgxMS42djIuNWgtNC4zdjEyLjF6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzlfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNmZmYiLz48Y2xpcFBhdGggaWQ9IlNWR0lEXzEwXyI+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfOV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48ZyBjbGFzcz0ic3Q0Ij48ZGVmcz48cGF0aCBpZD0iU1ZHSURfMTFfIiBkPSJNLTE5Ny0yOTJoNzYzdjU3NGgtNzYzeiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xMV8iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF8xMl8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzExXyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxwYXRoIGNsYXNzPSJzdDUiIGQ9Ik0yMi4yIDIuMmgyMS42djI0LjZIMjIuMnoiLz48L2c+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzEzXyIgZD0iTTQ0IDIxLjhWOS43aC00LjNWNy4yaDExLjZ2Mi41aC00LjR2MTIuMXoiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMTNfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNmZmYiLz48Y2xpcFBhdGggaWQ9IlNWR0lEXzE0XyI+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMTNfIiBvdmVyZmxvdz0idmlzaWJsZSIvPjwvY2xpcFBhdGg+PGcgY2xhc3M9InN0NiI+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzE1XyIgZD0iTS0xOTctMjkyaDc2M3Y1NzRoLTc2M3oiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMTVfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfMTZfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xNV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48cGF0aCBjbGFzcz0ic3Q3IiBkPSJNMzQuNyAyLjJoMjEuNnYyNC42SDM0Ljd6Ii8+PC9nPjxnPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF8xN18iIGQ9Ik01My4yIDcuMkg1OWMxLjIgMCAyIDAgMi42LjEuNi4xIDEuMS4zIDEuNS42LjQuMy44LjcgMS4xIDEuMi4zLjUuNCAxLjEuNCAxLjcgMCAuNy0uMiAxLjMtLjYgMS45LS40LjYtLjkgMS0xLjUgMS4zLjkuMyAxLjYuNyAyIDEuMy41LjYuNyAxLjQuNyAyLjIgMCAuNy0uMiAxLjMtLjUgMS45LS4zLjYtLjcgMS4xLTEuMyAxLjUtLjUuNC0xLjIuNi0yIC43LS41LjEtMS43LjEtMy42LjFoLTVWNy4yem0yLjkgMi40VjEzaDRjLjUtLjEuOS0uMiAxLjItLjUuMy0uMy40LS43LjQtMS4xIDAtLjUtLjEtLjgtLjQtMS4xLS4yLS4zLS42LS41LTEuMS0uNS0uMyAwLTEuMS0uMS0yLjUtLjFoLTEuNnptMCA1Ljh2My45aDIuN2MxLjEgMCAxLjcgMCAyLS4xLjQtLjEuOC0uMyAxLjEtLjYuMy0uMy40LS43LjQtMS4yIDAtLjQtLjEtLjgtLjMtMS4xLS4yLS4zLS41LS41LS45LS43LS40LS4xLTEuMy0uMi0yLjYtLjJoLTIuNHoiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMTdfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNmZmYiLz48Y2xpcFBhdGggaWQ9IlNWR0lEXzE4XyI+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMTdfIiBvdmVyZmxvdz0idmlzaWJsZSIvPjwvY2xpcFBhdGg+PGcgY2xhc3M9InN0OCI+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzE5XyIgZD0iTS0xOTctMjkyaDc2M3Y1NzRoLTc2M3oiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMTlfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfMjBfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xOV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48cGF0aCBjbGFzcz0ic3Q5IiBkPSJNNDguMiAyLjJoMjIuMnYyNC42SDQ4LjJ6Ii8+PC9nPjwvZz48Zz48ZGVmcz48cGF0aCBpZD0iU1ZHSURfMjFfIiBkPSJNNjcuOCA3LjJoMi45djcuOWMwIDEuMyAwIDIuMS4xIDIuNC4xLjYuNCAxLjEuOSAxLjQuNS40IDEuMS41IDEuOS41LjggMCAxLjUtLjIgMS45LS41LjQtLjMuNy0uOC44LTEuMy4xLS41LjEtMS4zLjEtMi41VjcuMmgyLjl2Ny43YzAgMS44LS4xIDMtLjIgMy43LS4yLjctLjUgMS4zLS45IDEuOHMtMSAuOS0xLjcgMS4yYy0uNi4zLTEuNS40LTIuNy40LTEuNCAwLTIuNC0uMi0zLjItLjUtLjctLjMtMS4zLS43LTEuNy0xLjNzLS43LTEuMS0uOC0xLjZjLS4yLS44LS4zLTIuMS0uMy0zLjdWNy4yeiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8yMV8iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfMjJfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8yMV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48ZyBjbGFzcz0ic3QxMCI+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzIzXyIgZD0iTS0xOTctMjkyaDc2M3Y1NzRoLTc2M3oiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMjNfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfMjRfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8yM18iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48cGF0aCBjbGFzcz0ic3QxMSIgZD0iTTYyLjggMi4yaDIxLjZWMjdINjIuOHoiLz48L2c+PC9nPjxnPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF8yNV8iIGQ9Ik04NS45IDIxLjhWOS43aC00LjRWNy4yaDExLjZ2Mi41aC00LjN2MTIuMXoiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMjVfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNmZmYiLz48Y2xpcFBhdGggaWQ9IlNWR0lEXzI2XyI+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMjVfIiBvdmVyZmxvdz0idmlzaWJsZSIvPjwvY2xpcFBhdGg+PGcgY2xhc3M9InN0MTIiPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF8yN18iIGQ9Ik0tMTk3LTI5Mmg3NjN2NTc0aC03NjN6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzI3XyIgb3ZlcmZsb3c9InZpc2libGUiIGZpbGw9IiNmZmYiLz48Y2xpcFBhdGggaWQ9IlNWR0lEXzI4XyI+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMjdfIiBvdmVyZmxvdz0idmlzaWJsZSIvPjwvY2xpcFBhdGg+PHBhdGggY2xhc3M9InN0MTMiIGQ9Ik03Ni41IDIuMmgyMS42djI0LjZINzYuNXoiLz48L2c+PC9nPjxnPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF8yOV8iIGQ9Ik05NC45IDcuMmgyLjl2MTQuNmgtMi45eiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8yOV8iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfMzBfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8yOV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48ZyBjbGFzcz0ic3QxNCI+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzMxXyIgZD0iTS0xOTctMjkyaDc2M3Y1NzRoLTc2M3oiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfMzFfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfMzJfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8zMV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48cGF0aCBjbGFzcz0ic3QxNSIgZD0iTTg5LjkgMi4yaDEyLjl2MjQuNkg4OS45eiIvPjwvZz48L2c+PGc+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzMzXyIgZD0iTTEwMC43IDIxLjhWNy4yaDN2Ni41bDUuOS02LjVoNGwtNS41IDUuNyA1LjggOC45aC0zLjhsLTQuMS02LjktMi4zIDIuNXY0LjR6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzMzXyIgb3ZlcmZsb3c9InZpc2libGUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF8zNF8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzMzXyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxnIGNsYXNzPSJzdDE2Ij48ZGVmcz48cGF0aCBpZD0iU1ZHSURfMzVfIiBkPSJNLTE5Ny0yOTJoNzYzdjU3NGgtNzYzeiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8zNV8iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF8zNl8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzM1XyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxwYXRoIGNsYXNzPSJzdDE3IiBkPSJNOTUuNyAyLjJoMjMuMXYyNC42SDk1Ljd6Ii8+PC9nPjwvZz48Zz48ZGVmcz48cGF0aCBpZD0iU1ZHSURfMzdfIiBkPSJNMTE1LjQgMjEuOFY3LjJoM3Y2LjVsNS45LTYuNWg0bC01LjUgNS43IDUuOCA4LjloLTMuOGwtNC02LjktMi40IDIuNXY0LjR6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzM3XyIgb3ZlcmZsb3c9InZpc2libGUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF8zOF8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzM3XyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxnIGNsYXNzPSJzdDE4Ij48ZGVmcz48cGF0aCBpZD0iU1ZHSURfMzlfIiBkPSJNLTE5Ny0yOTJoNzYzdjU3NGgtNzYzeiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8zOV8iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF80MF8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzM5XyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxwYXRoIGNsYXNzPSJzdDE5IiBkPSJNMTEwLjQgMi4yaDIzLjF2MjQuNmgtMjMuMXoiLz48L2c+PC9nPjxnPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF80MV8iIGQ9Ik0xNTguMiAxOWgyLjh2Mi44aC0yLjh6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzQxXyIgb3ZlcmZsb3c9InZpc2libGUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF80Ml8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzQxXyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxnIGNsYXNzPSJzdDIwIj48ZGVmcz48cGF0aCBpZD0iU1ZHSURfNDNfIiBkPSJNLTE5Ny0yOTJoNzYzdjU3NGgtNzYzeiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF80M18iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF80NF8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzQzXyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxwYXRoIGNsYXNzPSJzdDIxIiBkPSJNMTUzLjIgMTRIMTY2djEyLjhoLTEyLjh6Ii8+PC9nPjwvZz48Zz48ZGVmcz48cGF0aCBpZD0iU1ZHSURfNDVfIiBkPSJNMTczLjQgMjEuOGgtMi44di01LjRjMC0xLjEtLjEtMS45LS4yLTIuMi0uMS0uMy0uMy0uNi0uNi0uOC0uMy0uMi0uNi0uMy0xLS4zLS41IDAtLjkuMS0xLjMuNC0uNC4zLS42LjYtLjggMS4xLS4xLjQtLjIgMS4yLS4yIDIuNHY0LjhoLTIuOFYxMS4yaDIuNnYxLjZjLjktMS4yIDIuMS0xLjggMy41LTEuOC42IDAgMS4yLjEgMS43LjMuNS4yLjkuNSAxLjIuOS4zLjMuNC43LjUgMS4yLjEuNC4yIDEuMS4yIDEuOXY2LjV6Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzQ1XyIgb3ZlcmZsb3c9InZpc2libGUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF80Nl8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzQ1XyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxnIGNsYXNzPSJzdDIyIj48ZGVmcz48cGF0aCBpZD0iU1ZHSURfNDdfIiBkPSJNLTE5Ny0yOTJoNzYzdjU3NGgtNzYzeiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF80N18iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsPSIjZmZmIi8+PGNsaXBQYXRoIGlkPSJTVkdJRF80OF8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzQ3XyIgb3ZlcmZsb3c9InZpc2libGUiLz48L2NsaXBQYXRoPjxwYXRoIGNsYXNzPSJzdDIzIiBkPSJNMTU4LjggNmgxOS42djIwLjhoLTE5LjZ6Ii8+PC9nPjwvZz48Zz48ZGVmcz48cGF0aCBpZD0iU1ZHSURfNDlfIiBkPSJNMTc1LjYgMTYuM2MwLS45LjItMS44LjctMi43LjUtLjkgMS4xLTEuNSAxLjktMiAuOC0uNSAxLjgtLjcgMi44LS43IDEuNiAwIDIuOS41IDMuOSAxLjYgMSAxIDEuNSAyLjQgMS41IDMuOSAwIDEuNi0uNSAyLjktMS41IDRTMTgyLjYgMjIgMTgxIDIyYy0xIDAtMS45LS4yLTIuOC0uNy0uOS0uNC0xLjUtMS4xLTItMS45LS40LS44LS42LTEuOC0uNi0zLjFtMi45LjJjMCAxIC4yIDEuOC43IDIuNC41LjYgMS4xLjggMS44LjhzMS4zLS4zIDEuOC0uOGMuNS0uNi43LTEuNC43LTIuNHMtLjItMS44LS43LTIuNGMtLjUtLjYtMS4xLS44LTEuOC0uOHMtMS4zLjMtMS44LjgtLjcgMS4zLS43IDIuNCIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF80OV8iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfNTBfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF80OV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48ZyBjbGFzcz0ic3QyNCI+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzUxXyIgZD0iTS0xOTctMjkyaDc2M3Y1NzRoLTc2M3oiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfNTFfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfNTJfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF81MV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48cGF0aCBjbGFzcz0ic3QyNSIgZD0iTTE3MC42IDZoMjAuOXYyMWgtMjAuOXoiLz48L2c+PC9nPjxnPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF81M18iIGQ9Ik0xMzMuNCAzMlYwbDIzLjMgMjEuOC04LjguNCAyLjggNS42LTcuNSA0LjEtMy4zLTYuNC02LjUgNi41em03LjEtMTAuOWwzLjcgNy4yIDMtMS42LTMuNC02LjkgNi43LS4zTDEzNiA1Ljl2MTkuOGw0LjUtNC42eiIvPjwvZGVmcz48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF81M18iIG92ZXJmbG93PSJ2aXNpYmxlIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfNTRfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF81M18iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48ZyBjbGFzcz0ic3QyNiI+PGRlZnM+PHBhdGggaWQ9IlNWR0lEXzU1XyIgZD0iTS0xOTctMjkyaDc2M3Y1NzRoLTc2M3oiLz48L2RlZnM+PHVzZSB4bGluazpocmVmPSIjU1ZHSURfNTVfIiBvdmVyZmxvdz0idmlzaWJsZSIgZmlsbD0iI2ZmZiIvPjxjbGlwUGF0aCBpZD0iU1ZHSURfNTZfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF81NV8iIG92ZXJmbG93PSJ2aXNpYmxlIi8+PC9jbGlwUGF0aD48cGF0aCBjbGFzcz0ic3QyNyIgZD0iTTEyOC40LTVoMzMuM3Y0MmgtMzMuM3oiLz48L2c+PC9nPjwvc3ZnPg=="/>
+        </div>
+        <ul class="header__container--right header__menu">
+            <li class="header__menu__item active">
+                <button class="header__menu__item__button" data-button="products">
+                    <i class="material-icons header__menu__item__button__icon">menu</i>
+                    <span class="header__menu__item__button__text">Nettbutikk</span>
+                </button>
+            </li>
+
+            <li class="header__menu__item">
+                <button class="header__menu__item__button" data-button="login" data-bind="{css: {'hidden': 'user.isLoggedIn'}}">
+                    <i class="material-icons header__menu__item__button__icon">person</i>
+                    <span class="header__menu__item__button__text">Logg inn</span>
+                </button>
+
+                <button class="header__menu__item__button" data-button="user" data-bind="{css: {'!hidden': 'user.isLoggedIn'}}">
+                    <img class="header__menu__item__button__image"
+                         src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iODMiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCA4MyAyMSI+PHN0eWxlPi5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTIwLjEgNi40aC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNFY2LjhjLjEtLjItLjEtLjQtLjQtLjRNMjAuMSAxMi4xaC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMi4xYy4xLS4yLS4xLS40LS40LS40TTMxLjYgMTcuOGgtNy44Yy0uMyAwLS40LjItLjQuNHYyLjFjMCAuMy4yLjQuNC40aDcuOGMuMyAwIC40LS4yLjQtLjR2LTIuMWMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTcuOEguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNMzEuNiA2LjRoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40VjYuOGMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTIuMUguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNOC43LjZILjhDLjUuNi40LjguNCAxdjIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMmMuMS0uMy0uMS0uNS0uMy0uNU0zMS42LjZoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yYy4xLS4zLS4xLS41LS40LS41TTYyLjUuNmgtMmMtLjIgMC0uNC4yLS40LjR2MTkuM2MwIC4yLjIuNC40LjRoMmMuMiAwIC40LS4yLjQtLjRWMWMuMS0uMi0uMS0uNC0uNC0uNHptMjAuMyA4djQuMmMwIDUuMS0yLjggNy45LTcuOSA3LjloLTguMWMtLjIgMC0uNC0uMi0uNC0uNFYxYzAtLjIuMi0uNC40LS40aDhjNS4xIDAgOCAyLjkgOCA4em0tMy0uM2MwLTMuMi0xLjgtNC45LTQuOS00LjloLTUuNWMtLjEgMC0uMi4xLS4yLjJ2MTMuOWMwIC4xLjEuMi4yLjJINzVjMy4yIDAgNC45LTEuNyA0LjktNC44VjguM3pNNDEuNiA4LjFjLS4zLjMtLjQuNi0uMi43bDExLjcgMTEuN2MuMS4xLjUgMCAuNy0uMmwxLjUtMS41Yy4zLS4zLjQtLjYuMi0uN0w0My45IDYuNGMtLjEtLjItLjQtLjEtLjcuMmwtMS42IDEuNXoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNNTUuNCA4LjFjLjMuMy40LjYuMi43TDQzLjkgMjAuNWMtLjEuMS0uNSAwLS43LS4ybC0xLjUtMS41Yy0uMy0uMy0uNC0uNi0uMi0uN0w1My4xIDYuNGMuMS0uMi40LS4xLjcuMmwxLjYgMS41eiIvPjwvc3ZnPg=="/>
+                    <span class="header__menu__item__button__text" data-bind="{'text': 'user.name'}"></span>
+                    <i class="material-icons header__menu__item__button__icon">arrow_drop_down</i>
+                </button>
+
+                <!-- USER POPOVER -->
+                <div class="bid__popover" data-position="right top" data-popover="user">
+                    <div class="bid__popover__arrow-box">
+                        <div class="bid__popover__arrow-box--arrow">
+                            <div class="bid__popover__arrow-box--arrow--border"></div>
+                            <div class="bid__popover__arrow-box--arrow--fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="bid__popover__container">
+                        <div class="bid__popover__content">
+                            <div class="bid__popover__header">
+                                <h2 class="bid__popover__header--headline" data-bind="{text: 'user.name'}"></h2>
+                            </div>
+                            <ul class="bid__popover__list">
+                                <li class="bid__popover__list__item">
+                                    <button class="bid__popover__list__item__button" type="button" data-button="to-payment">Til betaling</button>
+                                </li>
+                                <li class="bid__popover__list__item">
+                                    <button class="bid__popover__list__item__button" type="button" data-button="switch-user">Bytt bruker</button>
+                                </li>
+                                <li class="bid__popover__list__item">
+                                    <button class="bid__popover__list__item__button" type="button" data-button="logout">Logg ut</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="header__menu__item">
+                <button class="header__menu__item__button header__menu__item__button--checkout" data-button="cart">
+                    <i class="material-icons header__menu__item__button__icon">shopping_cart</i>
+                    <span class="header__menu__item__button__text">Handlekurv</span>
+                    <span class="header__menu__item__button__additional header__menu__item__button--checkout__additional" data-bind="{text: 'shoppingCart.amount'}"></span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<main class="main">
+    <!-- PAGE: PRODUCTS -->
+    <article class="page" data-page="products">
+        <section class="section" data-section="products">
+            <div class="section__container">
+                <h1 class="headline headline--large">Våre produkter</h1>
+                <p class="headline-subtitle headline-subtitle--large">
+                    Prisvinnende produkter til rekordbillige priser!
+                </p>
+
+                <ul class="product-list" data-bind="{template: {id: 'product-list-item', data: 'productList'}}"></ul>
+            </div>
+        </section>
+
+        <section class="section" data-section="cart">
+            <div class="section__container">
+                <div class="sub-header">
+                    <i class="material-icons sub-header__icon">shopping_cart</i>
+                    <h1 class="sub-header__headline">
+                        Din handlekurv
+                    </h1>
+                    <button class="sub-header__button" data-bind="{click: 'onEmptyCartClick'}">
+                        <i class="material-icons sub-header__button__icon">delete</i>
+                        <span class=sub-header__button__text>Tøm handlekurv</span>
+                    </button>
+                </div>
+
+                <ul class="cart-list" data-bind="{template: {id: 'cart-list-item', data: 'productList'}}"></ul>
+
+                <div class="cart-is-empty" data-bind="{css: {'visible': 'shoppingCart.isEmpty'}}">Handlelisten er tom..</div>
+
+                <div class="cart-total">
+                    <div class="cart-total__text">Å betale</div>
+                    <div class="cart-total__sum" data-bind="{text: 'shoppingCart.costPretty'}"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-section="user">
+            <div class="section__container" data-bind="{hidden: 'user.isLoggedIn'}">
+                <div class="section__splitter">
+                    <!-- Login -->
+                    <div class="section__splitter__container">
+                        <div class="sub-header">
+                            <i class="material-icons sub-header__icon">person</i>
+                            <h1 class="sub-header__headline">
+                                Logg inn på Min side
+                            </h1>
+                        </div>
+
+                        <div class="grid grid--center grid--column">
+                            <div>
+                                <xid:connect-button id="login" scope="openid standard_bankid" text="Logg inn med xID"></xid:connect-button>
+                            </div>
+                            <div>
+                                <p class="section__paragraph">Klikk på xID knappen for å logge inn med xID dersom du allerede er registrert hos oss.</p>
+                            </div>
+                        </div>
+
+                        <div class="section__divider">
+                            <hr class="section__divider__hr">
+                            <span class="section__divider__text">Eller</span>
+                        </div>
+
+                        <div class="grid grid--center grid--column">
+                            <div>
+                                <p class="section__paragraph">Logg inn med e-postadresse og passord dersom du allerede er registrert hos oss.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-content">
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">E-post</label>
+                                <input type="email" class="label-value-content__value label-value-content__input" data-bind="{value: 'userForm.email', css: {'error': 'userForm.isLoginError'}}"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">Passord</label>
+                                <input type="password" class="label-value-content__value label-value-content__input" data-bind="{value: 'userForm.password', css: {'error': 'userForm.isLoginError'}}"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label label-value-content__label--empty">&nbsp;</label>
+                                <div class="label-value-content__value label-value-content__value--center">
+                                    <input id="user-remember-me" type="checkbox" class="label-value-content__checkbox"/> <label class="label-value-content__checkbox-label" for="user-remember-me">Husk meg (ikke bruk på offentlige
+                                    datamaskiner)</label>
+                                </div>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label label-value-content__label--empty">&nbsp;</label>
+                                <div class="label-value-content__value label-value-content__value--center">
+                                    <button class="call-to-action__button call-to-action__button--blue" data-bind="{click: 'onLoginClick'}">
+                                        <i class="material-icons call-to-action__button__icon">lock</i>
+                                        <span class="call-to-action__button__text">Logg inn</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Register -->
+                    <div class="section__splitter__container">
+                        <div class="sub-header">
+                            <i class="material-icons sub-header__icon">person_add</i>
+                            <h1 class="sub-header__headline">
+                                Bli ny kunde
+                            </h1>
+                        </div>
+
+                        <div class="grid grid--center grid--column">
+                            <div>
+                                <xid:connect-button id="register" text="Registrer med xID"></xid:connect-button>
+                            </div>
+                            <div>
+                                <p class="section__paragraph">Benytt din xID for å opprette konto</p>
+                            </div>
+                        </div>
+
+                        <div class="section__divider">
+                            <hr class="section__divider__hr">
+                            <span class="section__divider__text">Eller</span>
+                        </div>
+
+                        <div class="form-content">
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">Navn</label>
+                                <input type="text" class="label-value-content__value label-value-content__input"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">Etternavn</label>
+                                <input type="text" class="label-value-content__value label-value-content__input"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">E-post</label>
+                                <input type="email" class="label-value-content__value label-value-content__input"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">Mobilnummer</label>
+                                <input type="tel" class="label-value-content__value label-value-content__input"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">Adresse</label>
+                                <input type="text" class="label-value-content__value label-value-content__input"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">Postnummer</label>
+                                <input type="number" class="label-value-content__value label-value-content__input"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label">Sted</label>
+                                <input type="text" class="label-value-content__value label-value-content__input"/>
+                            </div>
+                            <div class="label-value-content">
+                                <label class="label-value-content__label label-value-content__label--empty">&nbsp;</label>
+                                <div class="label-value-content__value label-value-content__value--center">
+                                    <button class="call-to-action__button call-to-action__button--blue" data-bind="{click: 'onRegisterClick'}">
+                                        <i class="material-icons call-to-action__button__icon">person</i>
+                                        <span class="call-to-action__button__text">Opprett konto</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section__container" data-bind="{visible: 'user.isLoggedIn'}">
+                <div class="sub-header">
+                    <i class="material-icons sub-header__icon">person</i>
+                    <h1 class="sub-header__headline">Oppsummering</h1>
+                </div>
+
+                <div class="form-content">
+                    <div class="label-value-content label-value-content--not-responsive">
+                        <label class="label-value-content__label">Navn</label>
+                        <div class="label-value-content__value" data-bind="{text: 'user.name'}"></div>
+                    </div>
+                    <div class="label-value-content label-value-content--not-responsive">
+                        <label class="label-value-content__label">E-post</label>
+                        <div class="label-value-content__value" data-bind="{text: 'user.email'}"></div>
+                    </div>
+                    <div class="label-value-content label-value-content--not-responsive">
+                        <label class="label-value-content__label">Telefon</label>
+                        <div class="label-value-content__value" data-bind="{text: 'user.phone'}"></div>
+                    </div>
+                    <div class="label-value-content label-value-content--not-responsive">
+                        <label class="label-value-content__label">Adresse</label>
+                        <div class="label-value-content__value" data-bind="{text: 'user.address'}"></div>
+                    </div>
+                    <div class="label-value-content label-value-content--not-responsive">
+                        <label class="label-value-content__label">Postnr. / Sted</label>
+                        <div class="label-value-content__value" data-bind="{text: 'user.post'}"></div>
+                    </div>
+                    <div class="label-value-content">
+                        <label class="label-value-content__label label-value-content__label--empty">&nbsp;</label>
+                        <div class="label-value-content__value label-value-content__value--center">
+                            <div class="grid grid--padding grid--column" data-responsive="large">
+                                <div>
+                                    <button class="call-to-action__button" data-bind="{click: 'onFinishPayClick'}">
+                                        <span class="call-to-action__button__text">Fullfør betaling</span>
+                                        <i class="material-icons call-to-action__button__icon">chevron_right</i>
+                                    </button>
+                                    <br/>
+                                </div>
+                                <div class="grid--center-item-responsive">
+                                    <button class="call-to-action__button call-to-action__button--blue call-to-action__button--small" data-button="person-edit">
+                                        <i class="material-icons call-to-action__button__icon">person</i>
+                                        <span class="call-to-action__button__text">Endre personopplysninger</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+
+    <footer class="footer-content">
+        <ul class="footer__sub-list">
+            <li class="footer__sub-list__item">
+                <h3 class="footer__sub-list__item__headline">
+                    <i class="material-icons">lock</i>
+                    <span>Trygg netthandel</span>
+                </h3>
+                <p class="footer__sub-list__item__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo
+                    consequat. </p>
+            </li>
+
+            <li class="footer__sub-list__item">
+                <h3 class="footer__sub-list__item__headline">
+                    <i class="material-icons">local_shipping</i>
+                    <span>Levering</span>
+                </h3>
+                <p class="footer__sub-list__item__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo
+                    consequat. </p>
+            </li>
+
+            <li class="footer__sub-list__item">
+                <h3 class="footer__sub-list__item__headline">
+                    <i class="material-icons">help</i>
+                    <span>Hjelp og service</span>
+                </h3>
+                <p class="footer__sub-list__item__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo
+                    consequat. </p>
+            </li>
+
+            <li class="footer__sub-list__item">
+                <h3 class="footer__sub-list__item__headline">
+                    <i class="material-icons">assignment</i>
+                    <span>Vilkår</span>
+                </h3>
+                <p class="footer__sub-list__item__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo
+                    consequat. </p>
+            </li>
+        </ul>
+        <div class=footer__main>
+            Example Content
+        </div>
+    </footer>
+</main>
+
+<div class="toast-wrapper"></div>
+
+<div class="bid__dialog" data-dialog="finish-pay" role="dialog">
+    <div class="bid__dialog__container">
+        <main class="bid__dialog__main">
+            <section class="bid__dialog__section bid--scrollable">
+                <div class="bid__dialog__section__container">
+                    <div class="loop-wrapper">
+                        <h2>Takk for din betaling!</h2>
+                        <h3>Din pakke er undervis</h3>
+                        <div class="sun"></div>
+                        <div class="mountain"></div>
+                        <div class="hill"></div>
+                        <div class="tree"></div>
+                        <div class="tree"></div>
+                        <div class="tree"></div>
+                        <div class="rock"></div>
+                        <div class="truck"></div>
+                        <div class="wheels"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+
+<script type="text/html" data-template="product-list-item">
+    <li class="product-list__item" data-bind="{attr: {'data-product-id': 'id'}}">
+        <div class="product-list__item__image-title-description">
+            <img class="product-list__item__image" data-bind="{attr: {src: 'image'}}"/>
+            <div class="product-list__item__title-description">
+                <h2 class="product-list__item__title" data-bind="{text: 'title'}"></h2>
+                <p class="product-list__item__description" data-bind="{text: 'description'}"></p>
+            </div>
+        </div>
+        <div class="product-list__item__footer">
+            <div class="product-list__item__price" data-bind="{text: '$root.getPrettyCost'}"></div>
+            <button class="product-list__item__button product-list__item__button--add-cart" data-bind="{click: '$root.onAddToCartClick'}">
+                <span class="product-list__item__button__text">Legg til</span>
+                <i class="material-icons product-list__item__button__icon">shopping_cart</i>
+                <span class="product-list__item__button__additional" data-bind="{attr: {'data-cart-amount': 'amount'}}"></span>
+            </button>
+        </div>
+    </li>
+</script>
+
+<script type="text/html" data-template="cart-list-item">
+    <li class="cart-list__item" data-bind="{css: {'visible': 'amount'}}">
+        <div class="cart-list__item__amount">
+            <span class="cart-list__item__amount__text" data-bind="{text: 'amount'}"></span>
+        </div>
+        <div class="cart-list__item__image">
+            <img class="cart-list__item__image__img" data-bind="{attr: {src: 'image'}}"/>
+        </div>
+        <div class="cart-list__item__title-description-amount">
+            <div class="cart-list__item__title-description-amount__container">
+                <div class="cart-list__item__title-description">
+                    <h2 class="cart-list__item__title" data-bind="{text: 'title'}"></h2>
+                    <p class="cart-list__item__description" data-bind="{text: 'description'}"></p>
+                </div>
+                <div class="cart-list__item__amount-text">
+                    <span data-bind="{text: 'amount'}"></span>&nbsp;stk&nbsp;à&nbsp;<span data-bind="{text: '$root.getPrettyCost'}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="cart-list__item__total-price" data-bind="{text: '$root.getPrettyTotalCost'}"></div>
+        <div class="cart-list__item__buttons">
+            <button class="cart-list__item__button cart-list__item__button--decrease" data-bind="{click: '$root.onRemoveFromCartClick'}">-</button>
+            <button class="cart-list__item__button cart-list__item__button--increase" data-bind="{click: '$root.onAddToCartClick'}">+</button>
+        </div>
+    </li>
+</script>
+
+<script src="js/bid-xid_store.bundle.js"></script>
+<script src="{xidConnectJs}"></script>
+
+</body>
+</html>

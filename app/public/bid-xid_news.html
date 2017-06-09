@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+    <title>Nyhetsportal - BankID - xID POC</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/bid-xid_news.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header__container">
+        <div class="header__container__left">
+            <h1 class="header__headline">Nyhetsportal</h1>
+        </div>
+        <div class="header__container__right">
+            <!-- Latest news -->
+            <div class="header__content header__content--latest" data-responsive="large">
+                <div>
+                    <div class="header__content--latest__headline">Siste:</div>
+                    <div class="header__content--latest__text" data-bind="{'text': 'latestNews.text'}"></div>
+                    <div class="header__content--latest__time" data-bind="{'text': 'latestNews.time'}"></div>
+                </div>
+            </div>
+            <!-- Stock -->
+            <div class="header__content header__content--info" data-responsive="medium">
+                <img class="header__content--info__icon" data-bind="{'attr': {'src': 'stock.icon'}}"/>
+                <div class="header__content--info__container">
+                    <span class="header__content--info__text" data-bind="{'text': 'stock.text', attr: {'data-color': 'stock.color'}}"></span>
+                    <span class="header__content--info__subtext" data-bind="{'text': 'stock.subtext'}"></span>
+                </div>
+            </div>
+            <!-- Weather -->
+            <div class="header__content header__content--info" data-responsive="small">
+                <img class="header__content--info__icon" data-bind="{'attr': {'src': 'weather.icon'}}"/>
+                <div class="header__content--info__container">
+                    <span class="header__content--info__text" data-bind="{'text': 'weather.text', attr: {'data-color': 'weather.color'}}"></span>
+                    <span class="header__content--info__subtext" data-bind="{'text': 'weather.subtext'}"></span>
+                </div>
+            </div>
+            <div class="header__content">
+                <!-- Login button -->
+                <button disabled id="login-button" class="login-button visible">
+                    <img class="login-button__image" alt=""
+                         src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iODMiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCA4MyAyMSI+PHN0eWxlPi5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTIwLjEgNi40aC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNFY2LjhjLjEtLjItLjEtLjQtLjQtLjRNMjAuMSAxMi4xaC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMi4xYy4xLS4yLS4xLS40LS40LS40TTMxLjYgMTcuOGgtNy44Yy0uMyAwLS40LjItLjQuNHYyLjFjMCAuMy4yLjQuNC40aDcuOGMuMyAwIC40LS4yLjQtLjR2LTIuMWMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTcuOEguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNMzEuNiA2LjRoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40VjYuOGMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTIuMUguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNOC43LjZILjhDLjUuNi40LjguNCAxdjIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMmMuMS0uMy0uMS0uNS0uMy0uNU0zMS42LjZoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yYy4xLS4zLS4xLS41LS40LS41TTYyLjUuNmgtMmMtLjIgMC0uNC4yLS40LjR2MTkuM2MwIC4yLjIuNC40LjRoMmMuMiAwIC40LS4yLjQtLjRWMWMuMS0uMi0uMS0uNC0uNC0uNHptMjAuMyA4djQuMmMwIDUuMS0yLjggNy45LTcuOSA3LjloLTguMWMtLjIgMC0uNC0uMi0uNC0uNFYxYzAtLjIuMi0uNC40LS40aDhjNS4xIDAgOCAyLjkgOCA4em0tMy0uM2MwLTMuMi0xLjgtNC45LTQuOS00LjloLTUuNWMtLjEgMC0uMi4xLS4yLjJ2MTMuOWMwIC4xLjEuMi4yLjJINzVjMy4yIDAgNC45LTEuNyA0LjktNC44VjguM3pNNDEuNiA4LjFjLS4zLjMtLjQuNi0uMi43bDExLjcgMTEuN2MuMS4xLjUgMCAuNy0uMmwxLjUtMS41Yy4zLS4zLjQtLjYuMi0uN0w0My45IDYuNGMtLjEtLjItLjQtLjEtLjcuMmwtMS42IDEuNXoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNNTUuNCA4LjFjLjMuMy40LjYuMi43TDQzLjkgMjAuNWMtLjEuMS0uNSAwLS43LS4ybC0xLjUtMS41Yy0uMy0uMy0uNC0uNi0uMi0uN0w1My4xIDYuNGMuMS0uMi40LS4xLjcuMmwxLjYgMS41eiIvPjwvc3ZnPg=="/>
+                    <span class="login-button__text">Logg inn</span>
+                    <img class="login-button__icon" alt=""
+                         src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRkZGIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgNkw4LjU5IDcuNDEgMTMuMTcgMTJsLTQuNTggNC41OUwxMCAxOGw2LTZ6Ii8+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg=="/>
+                </button>
+
+                <!-- Menu button -->
+                <button disabled id="menu-button" class="menu-button">
+                    <img class="menu-button__image" alt=""
+                         src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iODMiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCA4MyAyMSI+PHN0eWxlPi5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTIwLjEgNi40aC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNFY2LjhjLjEtLjItLjEtLjQtLjQtLjRNMjAuMSAxMi4xaC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMi4xYy4xLS4yLS4xLS40LS40LS40TTMxLjYgMTcuOGgtNy44Yy0uMyAwLS40LjItLjQuNHYyLjFjMCAuMy4yLjQuNC40aDcuOGMuMyAwIC40LS4yLjQtLjR2LTIuMWMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTcuOEguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNMzEuNiA2LjRoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40VjYuOGMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTIuMUguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNOC43LjZILjhDLjUuNi40LjguNCAxdjIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMmMuMS0uMy0uMS0uNS0uMy0uNU0zMS42LjZoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yYy4xLS4zLS4xLS41LS40LS41TTYyLjUuNmgtMmMtLjIgMC0uNC4yLS40LjR2MTkuM2MwIC4yLjIuNC40LjRoMmMuMiAwIC40LS4yLjQtLjRWMWMuMS0uMi0uMS0uNC0uNC0uNHptMjAuMyA4djQuMmMwIDUuMS0yLjggNy45LTcuOSA3LjloLTguMWMtLjIgMC0uNC0uMi0uNC0uNFYxYzAtLjIuMi0uNC40LS40aDhjNS4xIDAgOCAyLjkgOCA4em0tMy0uM2MwLTMuMi0xLjgtNC45LTQuOS00LjloLTUuNWMtLjEgMC0uMi4xLS4yLjJ2MTMuOWMwIC4xLjEuMi4yLjJINzVjMy4yIDAgNC45LTEuNyA0LjktNC44VjguM3pNNDEuNiA4LjFjLS4zLjMtLjQuNi0uMi43bDExLjcgMTEuN2MuMS4xLjUgMCAuNy0uMmwxLjUtMS41Yy4zLS4zLjQtLjYuMi0uN0w0My45IDYuNGMtLjEtLjItLjQtLjEtLjcuMmwtMS42IDEuNXoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNNTUuNCA4LjFjLjMuMy40LjYuMi43TDQzLjkgMjAuNWMtLjEuMS0uNSAwLS43LS4ybC0xLjUtMS41Yy0uMy0uMy0uNC0uNi0uMi0uN0w1My4xIDYuNGMuMS0uMi40LS4xLjcuMmwxLjYgMS41eiIvPjwvc3ZnPg=="/>
+                    <span class="menu-button__text"></span>
+                    <img class="menu-button__icon" alt=""
+                         src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRkZGIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNyAxMGw1IDUgNS01eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4="/>
+                </button>
+
+                <!-- MENU POPOVER -->
+                <div class="bid__popover" data-position="right top" data-popover="menu">
+                    <div class="bid__popover__arrow-box">
+                        <div class="bid__popover__arrow-box--arrow">
+                            <div class="bid__popover__arrow-box--arrow--border"></div>
+                            <div class="bid__popover__arrow-box--arrow--fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="bid__popover__container">
+                        <div class="bid__popover__content">
+                            <ul class="bid__popover__list">
+                                <li class="bid__popover__list__item">
+                                    <button id="switch-user-button" class="bid__popover__list__item__button" type="button">Bytt bruker</button>
+                                </li>
+                                <li class="bid__popover__list__item">
+                                    <button id="logout-button" class="bid__popover__list__item__button" type="button">Logg ut</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="main">
+    <section class="main__section main__section--main" data-bind="{'template': {'id': 'news-article', 'data': 'news.main'}}"></section>
+
+    <section class="main__section main__section--sidebar" data-bind="{'template': {'id': 'news-article', 'data': 'news.sidebar'}}"></section>
+
+    <article class="article article--ad">
+        <img alt="" data-bind="{'attr': {'src': 'ads.primary'}}"/>
+    </article>
+
+    <section class="main__section" data-bind="{'template': {'id': 'news-article', 'data': 'news.bottom'}}"></section>
+
+    <article class="article article--ad">
+        <img alt="" data-bind="{'attr': {'src': 'ads.secondary'}}"/>
+    </article>
+</main>
+
+<footer class="footer">
+    &copy; Nyhetsportal
+</footer>
+
+<div class="toast-wrapper"></div>
+
+<div class="bid__dialog" data-dialog="xid-login-modal" role="dialog">
+    <div class="bid__dialog__container">
+        <main class="bid__dialog__main">
+            <section class="bid__dialog__section bid--scrollable">
+                <div class="bid__dialog__section__container">
+                    <article id="authenticate-client"></article>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<script type="text/html" data-template="news-article">
+    <article class="article" data-bind="{ 'attr': { 'data-size': 'size', 'data-custom': 'custom', 'data-color': 'color' } }">
+        <div data-bind="{ 'hidden': 'list' }">
+            <img alt="" class="article__image" data-bind="{ 'attr': { 'src': 'image' } }"/>
+            <h2 class="article__headline" data-bind="{ 'text': 'title' }"></h2>
+        </div>
+
+        <div data-bind="{ 'visible': 'list' }">
+            <ul class="article__list" data-bind="{ 'template': { 'id': 'news-article-list-item', 'data': 'list' } }"></ul>
+        </div>
+    </article>
+</script>
+
+<script type="text/html" data-template="news-article-list-item">
+    <li class="article__list__item article__list__item--link" data-bind="{'text': '$data'}"></li>
+</script>
+
+<script src="{xidConnectJs}"></script>
+<script src="js/bid-xid_news.bundle.js"></script>
+
+</body>
+</html>
