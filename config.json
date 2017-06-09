@@ -1,0 +1,17 @@
+{
+  "xidClientId": "TODO ADD YOUR CLIENT ID",
+  "xidConnectJs": "https://xid-poc.bankidnorge.no/js/bid-xid_connect.bundle.min.js",
+  "xidConnectCss": "https://xid-poc.bankidnorge.no/css/bid-xid_connect.min.css",
+  "xidSecret": {
+    "store": "TODO: ADD CLIENT SECRET",
+    "news": "TODO: ADD CLIENT SECRET",
+    "bank": "TODO: ADD CLIENT SECRET",
+    "default": "TODO: ADD CLIENT SECRET"
+  },
+  "xidOauthTokenUrl": "http://localhost:3005/oauth/token",
+  "xidOauthUserInfoUrl": "http://localhost:3005/oauth/userinfo",
+  "xidBackendOauthTokenUrl": "https://preview.bankidapis.no/oidc-xid-poc/oauth/token",
+  "xidBackendOauthUserInfoUrl": "https://preview.bankidapis.no/oidc-xid-poc/oauth/userinfo",
+  "xidOauthRedirectUri": "https://xid-poc.bankidnorge.no/bidview/bid-xid.html?action=callback",
+  "xidOauthEndpoint": "https://preview.bankidapis.no/oidc-xid-poc/oauth"
+}
