@@ -1,4 +1,4 @@
-const PATH = require( 'path' );
+const PATH = require( 'upath' );
 
 const gulp = require( 'gulp' );
 const gutil = require( 'gulp-util' );

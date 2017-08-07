@@ -1,6 +1,6 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-const PATH = require( 'path' );
+const PATH = require( 'upath' );
 
 const ROOT = '../';
 const PUBLIC_FOLDER = PATH.resolve( __dirname, ROOT, 'app', 'public' );
@@ -30,7 +30,7 @@ function getDefaultDataJson() {
             return null;
         }
     })() );
-    
+
     return data;
 }
 
