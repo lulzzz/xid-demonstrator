@@ -31,8 +31,7 @@
                 </button>
 
                 <button class="header__menu__item__button" data-button="user" data-bind="{css: {'!hidden': 'user.isLoggedIn'}}">
-                    <img class="header__menu__item__button__image"
-                         src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iODMiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCA4MyAyMSI+PHN0eWxlPi5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTIwLjEgNi40aC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNFY2LjhjLjEtLjItLjEtLjQtLjQtLjRNMjAuMSAxMi4xaC03LjhjLS4zIDAtLjQuMi0uNC40djIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMi4xYy4xLS4yLS4xLS40LS40LS40TTMxLjYgMTcuOGgtNy44Yy0uMyAwLS40LjItLjQuNHYyLjFjMCAuMy4yLjQuNC40aDcuOGMuMyAwIC40LS4yLjQtLjR2LTIuMWMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTcuOEguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNMzEuNiA2LjRoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40VjYuOGMuMS0uMi0uMS0uNC0uNC0uNE04LjcgMTIuMUguOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yLjFjLjEtLjItLjEtLjQtLjMtLjRNOC43LjZILjhDLjUuNi40LjguNCAxdjIuMWMwIC4zLjIuNC40LjRoNy44Yy4zIDAgLjQtLjIuNC0uNHYtMmMuMS0uMy0uMS0uNS0uMy0uNU0zMS42LjZoLTcuOGMtLjMgMC0uNC4yLS40LjR2Mi4xYzAgLjMuMi40LjQuNGg3LjhjLjMgMCAuNC0uMi40LS40di0yYy4xLS4zLS4xLS41LS40LS41TTYyLjUuNmgtMmMtLjIgMC0uNC4yLS40LjR2MTkuM2MwIC4yLjIuNC40LjRoMmMuMiAwIC40LS4yLjQtLjRWMWMuMS0uMi0uMS0uNC0uNC0uNHptMjAuMyA4djQuMmMwIDUuMS0yLjggNy45LTcuOSA3LjloLTguMWMtLjIgMC0uNC0uMi0uNC0uNFYxYzAtLjIuMi0uNC40LS40aDhjNS4xIDAgOCAyLjkgOCA4em0tMy0uM2MwLTMuMi0xLjgtNC45LTQuOS00LjloLTUuNWMtLjEgMC0uMi4xLS4yLjJ2MTMuOWMwIC4xLjEuMi4yLjJINzVjMy4yIDAgNC45LTEuNyA0LjktNC44VjguM3pNNDEuNiA4LjFjLS4zLjMtLjQuNi0uMi43bDExLjcgMTEuN2MuMS4xLjUgMCAuNy0uMmwxLjUtMS41Yy4zLS4zLjQtLjYuMi0uN0w0My45IDYuNGMtLjEtLjItLjQtLjEtLjcuMmwtMS42IDEuNXoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNNTUuNCA4LjFjLjMuMy40LjYuMi43TDQzLjkgMjAuNWMtLjEuMS0uNSAwLS43LS4ybC0xLjUtMS41Yy0uMy0uMy0uNC0uNi0uMi0uN0w1My4xIDYuNGMuMS0uMi40LS4xLjcuMmwxLjYgMS41eiIvPjwvc3ZnPg=="/>
+                    <i class="material-icons header__menu__item__button__icon">person</i>
                     <span class="header__menu__item__button__text" data-bind="{'text': 'user.name'}"></span>
                     <i class="material-icons header__menu__item__button__icon">arrow_drop_down</i>
                 </button>
@@ -130,7 +129,7 @@
 
                         <div class="grid grid--center grid--column">
                             <div>
-                                <xid:connect-button id="login" scope="openid standard_bankid" text="Logg inn med xID"></xid:connect-button>
+                                <xid:connect-button id="login" scope="openid standard_bankid" text="Logg inn med&nbsp;"></xid:connect-button>
                             </div>
                             <div>
                                 <p class="section__paragraph">Klikk på xID knappen for å logge inn med xID dersom du allerede er registrert hos oss.</p>
@@ -187,7 +186,7 @@
 
                         <div class="grid grid--center grid--column">
                             <div>
-                                <xid:connect-button id="register" text="Registrer med xID"></xid:connect-button>
+                                <xid:connect-button id="register" text="Registrer med&nbsp;"></xid:connect-button>
                             </div>
                             <div>
                                 <p class="section__paragraph">Benytt din xID for å opprette konto</p>
@@ -350,7 +349,7 @@
                 <div class="bid__dialog__section__container">
                     <div class="loop-wrapper">
                         <h2>Takk for din betaling!</h2>
-                        <h3>Din pakke er undervis</h3>
+                        <h3>Din pakke er underveis</h3>
                         <div class="sun"></div>
                         <div class="mountain"></div>
                         <div class="hill"></div>
