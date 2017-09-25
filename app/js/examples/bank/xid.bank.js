@@ -22,7 +22,7 @@ function doInitXID() {
         client_id: 'xIDBank',
         client_type: '',
         scope: 'openid standard_bankid',
-        noStepup: false,
+        unsolicited: false,
         method: 'inline',
         redirect_uri: '{data_xidOauthRedirectUri}',
         oauth_url: '{data_xidOauthEndpoint}',

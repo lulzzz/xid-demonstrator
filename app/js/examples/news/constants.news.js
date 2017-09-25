@@ -1,4 +1,5 @@
-const STORAGE_KEY_USER = 'xid-news-user';
+const STORAGE_KEY_USERS = 'xid-news-users';
+const STORAGE_KEY_LOGGED_IN_USER = 'xid-news-user-logged-in';
 const NEWS = {
     default: {
         main: [{
@@ -158,4 +159,4 @@ const WEATHER = {
     }
 };
 
-export default {ADS, NEWS, WEATHER, WEATHER_ICON, WEATHER_YAHOO_CODE, STORAGE_KEY_USER};
+export default {ADS, NEWS, WEATHER, WEATHER_ICON, WEATHER_YAHOO_CODE, STORAGE_KEY_USERS, STORAGE_KEY_LOGGED_IN_USER};

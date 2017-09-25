@@ -1,4 +1,5 @@
 import ToastHelper from '../../helper/toast-helper';
+import UtilHelper from '../../helper/util-helper';
 
 import {
     doLoginUser,
@@ -16,8 +17,8 @@ function onXIDLoaded() {
     window.XID.doInit( {
         client_id: 'xIDStore',
         client_type: 'XID',
-        scope: 'openid email phone address',
-        noStepup: false,
+        scope: 'openid standard_bankid email phone address',
+        unsolicited: false,
         forceClientPrompt: false,
         redirect_uri: '{data_xidOauthRedirectUri}',
         oauth_url: '{data_xidOauthEndpoint}',
@@ -34,11 +35,9 @@ function doLogoutFromXID() {
 
 function doSwitchUserXID() {
     doLogoutFromXID();
-
-    // Remove xID Cookie
+    // FIXME Removes xID Cookie but should not be able to.
     window.XID.doReset();
-
-    doLoginWithXID( {client_type: '', forceClientPrompt: true} );
+    doLoginWithXID();
 }
 
 function doLoginWithXID( config = {} ) {
@@ -65,7 +64,8 @@ function doLoginWithXID( config = {} ) {
                 } );
             }
         },
-        config: config
+        config: config,
+        applicationName: 'nettbutikk.no'
     } );
 
 }

@@ -12,14 +12,19 @@ import CONSTANTS from './constants.news';
 
 import {
     doStoreUser,
-    getLoggedInUser
+    setLoggedInUser,
+    getLoggedInUser,
+    getStoredUser
 } from './store.news';
 import {
     doLoginWithXID,
     doLogoutFromXID,
     doSwitchUserXID,
-    onXIDLoaded
+    doGetUserInfoXID,
+    onXIDLoaded,
+    onXIDClick
 } from './xid.news';
+import JWTHelper from "../../helper/jwt-helper";
 
 // VARIABLES
 let isContentLoaded = false;
@@ -64,7 +69,7 @@ const adsVm = observable( {
 function getUserPlace() {
     const user = getLoggedInUser();
     if ( user ) {
-        return user.address && user.address.locality || 'Oslo';
+        return user.address && user.address.locality || 'Bergen';
     }
     else {
         return 'Bergen';
@@ -80,7 +85,7 @@ function isUserLoggedIn() {
  */
 function handleXIDLogin( user ) {
     console.log( 'handleXIDLogin', user );
-    doStoreUser( user );
+    setLoggedInUser( user );
 
     if ( user ) {
         loginButtonElement.disabled = true;
@@ -102,6 +107,34 @@ function handleXIDLogin( user ) {
     }
 
     doUpdateContent();
+}
+
+function doXIDConnectCallback( err, accessToken ) {
+    console.log( 'doConnectCallback', accessToken );
+    if ( err ) {
+        console.error( 'doLoginWithXID', err );
+        if ( isUserLoggedIn() ) {
+            handleXIDLogin( null );
+        }
+    }
+    else {
+        if ( accessToken && typeof accessToken === "object" ) {
+            const tokenData = JWTHelper.parse( accessToken.id_token );
+            const user = getStoredUser( tokenData.sub );
+
+            if ( user !== null ) {
+                // Call handler for logging in user (display specialized stories etc.)
+                handleXIDLogin( user || null );
+
+                // Update user info for this user
+                doStoreUser( user );
+            } else {
+                doGetUserInfoXID();
+            }
+        } else {
+            doGetUserInfoXID();
+        }
+    }
 }
 
 function doUpdateContent() {
@@ -240,11 +273,11 @@ function doInit() {
     const logoutButtonElement = document.querySelector( '#logout-button' );
     const switchUserButtonElement = document.querySelector( '#switch-user-button' );
 
-    loginButtonElement.addEventListener( 'click', doLoginWithXID, false );
+    loginButtonElement.addEventListener( 'click', onXIDClick.bind( null, doXIDConnectCallback ), false );
     logoutButtonElement.addEventListener( 'click', doLogoutFromXID, false );
-    switchUserButtonElement.addEventListener( 'click', doSwitchUserXID, false );
+    switchUserButtonElement.addEventListener( 'click', doSwitchUserXID.bind( null, doXIDConnectCallback ), false );
 
-    document.body.addEventListener( 'xid-loaded', onXIDLoaded, false );
+    document.body.addEventListener( 'xid-loaded', onXIDLoaded.bind( null, doXIDConnectCallback ), false );
 }
 
 export {

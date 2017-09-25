@@ -1,7 +1,7 @@
 import '../../polyfill';
 
-import {applyBindings} from '../../lib/binder';
-import {observable} from '../../lib/observer';
+import { applyBindings } from '../../lib/binder';
+import { observable } from '../../lib/observer';
 
 import {
     doLogoutFromXID,
@@ -31,11 +31,11 @@ const userVm = observable( {
 // FUNCTIONS
 
 function getPageNameFromHash() {
-    return ((window.location.hash || '').match( /#(\w+)/i ) || [null, getDefaultPageName()])[1];
+    return ( ( window.location.hash || '' ).match( /#(\w+)/i ) || [null, getDefaultPageName()] )[1];
 }
 
 function getUrlParameter( name, def ) {
-    const value = ((new RegExp( name + '=' + '(.+?)(&|$)' )).exec( document.location.search ) || [null, def !== undefined ? def : null])[1];
+    const value = ( ( new RegExp( name + '=' + '(.+?)(&|$)' ) ).exec( document.location.search ) || [null, def !== undefined ? def : null] )[1];
     if ( value ) {
         return decodeURI( value );
     }

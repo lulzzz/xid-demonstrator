@@ -13,7 +13,7 @@ import {
     observable,
     observe
 } from '../../lib/observer';
-import {applyBindings} from '../../lib/binder';
+import { applyBindings } from '../../lib/binder';
 
 import DomHelper from '../../helper/dom-helper';
 import ToastHelper from '../../helper/toast-helper';
@@ -22,6 +22,8 @@ import ProductStore from '../../store/product.store';
 
 import DialogComponent from '../../component/dialog.component';
 import PopoverComponent from '../../component/popover.component';
+
+import UtilHelper from '../../helper/util-helper.js';
 
 import CONSTANTS from './constants.webshop';
 
@@ -78,14 +80,13 @@ function createUserFromXID( userInfo ) {
     let postal_address = '';
     if ( getAddress().postal_code && getAddress().locality ) {
         postal_address = getAddress().postal_code + ' ' + getAddress().locality;
-    } else {
-        postal_address = '0100 Oslo';
     }
+
     return {
         name: userInfo.name,
-        email: userInfo.email || (userInfo.given_name + '.' + userInfo.family_name).replace( ' ', '.' ).toLowerCase() + '@xid.bankidnorge.no',
-        phone: userInfo.phone_number || '90123456',
-        address: getAddress().street_address || 'Hjemmeveien 115',
+        email: userInfo.email || '',
+        phone: userInfo.phone_number || '',
+        address: getAddress().street_address || '',
         post: postal_address
     };
 }
@@ -119,8 +120,8 @@ function getLoggedInUser() {
 function getPrettyNumber( num ) {
     const p = String( Math.round( num ) );
     return p.split( '' )
-            .reverse()
-            .reduce( ( acc, num, i ) => num == '-' ? acc : num + (i && !(i % 3) ? ' ' : '') + acc, '' ) + ',-';
+        .reverse()
+        .reduce( ( acc, num, i ) => num == '-' ? acc : num + ( i && !( i % 3 ) ? ' ' : '' ) + acc, '' ) + ',-';
 }
 
 function onUserFormChange( value, key ) {
@@ -151,7 +152,7 @@ function doEmptyCart() {
 }
 
 function doLoginWithForm() {
-    if ( CONSTANTS.USER_EMAIL.toLowerCase() === (userFormVm.email || '').toLowerCase() && CONSTANTS.USER_PASSWORD.toLowerCase() === (userFormVm.password || '').toLowerCase() ) {
+    if ( CONSTANTS.USER_EMAIL.toLowerCase() === ( userFormVm.email || '' ).toLowerCase() && CONSTANTS.USER_PASSWORD.toLowerCase() === ( userFormVm.password || '' ).toLowerCase() ) {
         userFormVm.isLoginError = false;
         doLoginUser( createUserFromForm() );
         ToastHelper.showToast( toastContainerElement, 'Bruker logget in' );
@@ -197,7 +198,7 @@ function doPopulateUser( user ) {
 }
 
 function doScrollToUser() {
-    DomHelper.scrollIntoView( activePageElement.querySelector( '.section[data-section=user]' ), {alignToTop: true} );
+    DomHelper.scrollIntoView( activePageElement.querySelector( '.section[data-section=user]' ), { alignToTop: true } );
 }
 
 function onXIDConnect( event ) {
@@ -222,7 +223,7 @@ function onXIDUser( event ) {
 
 function doInit() {
     document.querySelector( 'button[data-button=cart]' ).addEventListener( 'click', () => {
-        DomHelper.scrollIntoView( activePageElement.querySelector( '.section[data-section=cart]' ), {alignToTop: true} );
+        DomHelper.scrollIntoView( activePageElement.querySelector( '.section[data-section=cart]' ), { alignToTop: true } );
     }, false );
     document.querySelector( 'button[data-button=login]' ).addEventListener( 'click', doScrollToUser, false );
     document.querySelector( 'button[data-button=logout]' ).addEventListener( 'click', doLogoutFromXID, false );
