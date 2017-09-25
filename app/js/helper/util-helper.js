@@ -8,8 +8,8 @@ export default class UtilHelper {
                 return ': "' + p1.replace( /:/g, '@colon@' ) + '"';
             } )
             .replace( /(['"])?([!a-z0-9A-Z_\-]+)(['"])?\s*:/g, '"$2": ' )
-            .replace( /@colon@/g, ':' );
-
+            .replace( /@colon@/g, ':' )
+            .replace( /(\r\n|\n|\r)/gm, '' );
         return JSON.parse( fixedJSON );
     }
 
@@ -49,5 +49,19 @@ export default class UtilHelper {
         }
 
         return obj;
+    }
+
+    /**
+     * @param {Object} obj
+     * @returns {Boolean} True if all values in obj are false ish
+     */
+    static isObjectEmpty( obj ) {
+        for ( let key in obj ) {
+            if ( obj.hasOwnProperty( key ) && ( obj[key] || obj[key] === false ) ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

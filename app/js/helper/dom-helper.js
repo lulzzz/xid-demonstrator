@@ -16,7 +16,7 @@ function easeInOutQuad( time, startVal, changeInVal, duration ) {
         return changeInVal / 2 * t2 * t2 + startVal;
     }
     t2--;
-    return -changeInVal / 2 * (t2 * (t2 - 2) - 1) + startVal;
+    return -changeInVal / 2 * ( t2 * ( t2 - 2 ) - 1 ) + startVal;
 }
 
 export default class DomHelper {
@@ -63,7 +63,7 @@ export default class DomHelper {
 
             while ( parent ) {
 
-                const currentStyle = (window.getComputedStyle( parent ) || {});
+                const currentStyle = ( window.getComputedStyle( parent ) || {} );
                 const re = /auto|scroll/i;
 
                 if ( re.test( currentStyle.overflow ) || re.test( currentStyle.overflowY ) ) {
@@ -263,8 +263,8 @@ export default class DomHelper {
             //noinspection JSUnresolvedFunction
             blocker.show();
             start = {
-                x: (e.pageX || e.clientX),
-                y: (e.pageY || e.clientY),
+                x: ( e.pageX || e.clientX ),
+                y: ( e.pageY || e.clientY ),
                 w: parseInt( window.getComputedStyle( client, null ).width, 10 ),
                 h: parseInt( window.getComputedStyle( client, null ).height, 10 )
             };
@@ -278,8 +278,8 @@ export default class DomHelper {
          */
         function doDrag( e ) {
             e.preventDefault();
-            client.style.width = (Math.round( (start.w + ((e.pageX || e.clientX) - start.x) * 2) / 2 ) * 2) + 'px';
-            client.style.height = (Math.round( (start.h + ((e.pageY || e.clientY) - start.y) * 2) / 2 ) * 2) + 'px';
+            client.style.width = ( Math.round( ( start.w + ( ( e.pageX || e.clientX ) - start.x ) * 2 ) / 2 ) * 2 ) + 'px';
+            client.style.height = ( Math.round( ( start.h + ( ( e.pageY || e.clientY ) - start.y ) * 2 ) / 2 ) * 2 ) + 'px';
 
             if ( options.onResized ) {
                 options.onResized( parseInt( client.style.width ), parseInt( client.style.height ) );
@@ -451,7 +451,7 @@ export default class DomHelper {
      */
     static ajax( url, data, callback, method = 'GET', json = false ) {
         let contentType = 'application/x-www-form-urlencoded';
-        if ( data && !json && typeof(data) === 'object' ) {
+        if ( data && !json && typeof( data ) === 'object' ) {
             let y = '',
                 e = encodeURIComponent;
             for ( let x in data ) {
@@ -460,7 +460,7 @@ export default class DomHelper {
                 }
             }
             data = y.slice( 1 );
-        } else if ( data && json && typeof(data) === 'object' ) {
+        } else if ( data && json && typeof( data ) === 'object' ) {
             data = JSON.stringify( data );
             contentType = 'application/json';
         }
@@ -470,10 +470,10 @@ export default class DomHelper {
         }
 
         try {
-            const xhr = new (window.XMLHttpRequest || window.ActiveXObject)( 'MSXML2.XMLHTTP.3.0' );
+            const xhr = new ( window.XMLHttpRequest || window.ActiveXObject )( 'MSXML2.XMLHTTP.3.0' );
             xhr.open( method, url, 1 );
             xhr.withCredentials = true;
-            xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
+            // xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' ); // TODO Removed because it sends an OPTION request before the request, is this needed? I think so for some servers.
             xhr.setRequestHeader( 'Content-type', contentType );
             xhr.onreadystatechange = function () {
                 if ( xhr.readyState > 3 ) {
@@ -481,13 +481,19 @@ export default class DomHelper {
                         callback( null, xhr.responseText );
                     }
                     else {
-                        callback( {message: xhr.responseText, error: xhr, code: xhr.status} );
+                        callback( { message: xhr.responseText, error: xhr, code: xhr.status } );
                     }
                 }
             };
             xhr.send( data );
         } catch ( e ) {
-            callback( {error: e} );
+            callback( { error: e } );
         }
+    }
+
+    static openWindow( width, height, href ) {
+        const left = ( window.screen.width / 2 )-( width/2 );
+        const top = ( window.screen.height / 2 )-( height/2 );
+        window.open( href, 'newwindow', `width=${width},height=${height},top=${top},left=${left}` );
     }
 }
