@@ -1,4 +1,9 @@
 {
+  "acceptedLocales": [
+    "no",
+    "en",
+    "zz"
+  ],
   "xidClientId": "TODO ADD YOUR CLIENT ID",
   "xidConnectJs": "https://xid-poc.bankidnorge.no/js/bid-xid_connect.bundle.min.js",
   "xidConnectCss": "https://xid-poc.bankidnorge.no/css/bid-xid_connect.min.css",
