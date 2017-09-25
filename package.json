@@ -1,8 +1,7 @@
 {
-  "name": "bankid-oauth-client",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "xid-demonstrator",
+  "version": "1.0.1",
+  "description": "This repository showcases xID example implementations and how they integrate with xID.",
   "scripts": {
     "start": "gulp server",
     "build": "gulp build:js",
@@ -11,9 +10,8 @@
   "port": 3005,
   "portBrowserSync": 3006,
   "portBrowserSyncUI": 3007,
-  "base": "{data_baseUrl}",
-  "author": "",
-  "license": "ISC",
+  "author": "BankID",
+  "license": "Apache-2.0",
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
