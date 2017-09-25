@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -96,6 +96,102 @@ module.exports = g;
 /***/ }),
 /* 1 */,
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UtilHelper = function () {
+    function UtilHelper() {
+        _classCallCheck(this, UtilHelper);
+    }
+
+    _createClass(UtilHelper, null, [{
+        key: 'parseJSON',
+        value: function parseJSON(str) {
+            var fixedJSON = str.replace(/:\s*"([^"]*)"/g, function (match, p1) {
+                return ': "' + p1.replace(/:/g, '@colon@') + '"';
+            }).replace(/:\s*'([^']*)'/g, function (match, p1) {
+                return ': "' + p1.replace(/:/g, '@colon@') + '"';
+            }).replace(/(['"])?([!a-z0-9A-Z_\-]+)(['"])?\s*:/g, '"$2": ').replace(/@colon@/g, ':').replace(/(\r\n|\n|\r)/gm, '');
+            return JSON.parse(fixedJSON);
+        }
+    }, {
+        key: 'objDiff',
+        value: function objDiff(obj, objCompare) {
+            var objDiff = {};
+
+            if (!obj) {
+                return objDiff;
+            }
+
+            Object.keys(obj).forEach(function (key) {
+                if (JSON.stringify(obj[key]) !== JSON.stringify(objCompare[key])) {
+                    objDiff[key] = obj[key];
+                }
+            });
+
+            return objDiff;
+        }
+
+        /**
+         * @param {String} search
+         * @returns {Object}
+         */
+
+    }, {
+        key: 'urlSearchToObj',
+        value: function urlSearchToObj(search) {
+            var pairs = search.substring(1).split('&'),
+                obj = {};
+            var pair = void 0,
+                i = void 0;
+
+            for (i in pairs) {
+                if (pairs[i] === '') {
+                    continue;
+                }
+
+                pair = pairs[i].split('=');
+                obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            }
+
+            return obj;
+        }
+
+        /**
+         * @param {Object} obj
+         * @returns {Boolean} True if all values in obj are false ish
+         */
+
+    }, {
+        key: 'isObjectEmpty',
+        value: function isObjectEmpty(obj) {
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key) && (obj[key] || obj[key] === false)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }]);
+
+    return UtilHelper;
+}();
+
+exports.default = UtilHelper;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -186,87 +282,7 @@ function isObservable(obj) {
 }
 
 /***/ }),
-/* 3 */,
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var UtilHelper = function () {
-    function UtilHelper() {
-        _classCallCheck(this, UtilHelper);
-    }
-
-    _createClass(UtilHelper, null, [{
-        key: 'parseJSON',
-        value: function parseJSON(str) {
-            var fixedJSON = str.replace(/:\s*"([^"]*)"/g, function (match, p1) {
-                return ': "' + p1.replace(/:/g, '@colon@') + '"';
-            }).replace(/:\s*'([^']*)'/g, function (match, p1) {
-                return ': "' + p1.replace(/:/g, '@colon@') + '"';
-            }).replace(/(['"])?([!a-z0-9A-Z_\-]+)(['"])?\s*:/g, '"$2": ').replace(/@colon@/g, ':');
-
-            return JSON.parse(fixedJSON);
-        }
-    }, {
-        key: 'objDiff',
-        value: function objDiff(obj, objCompare) {
-            var objDiff = {};
-
-            if (!obj) {
-                return objDiff;
-            }
-
-            Object.keys(obj).forEach(function (key) {
-                if (JSON.stringify(obj[key]) !== JSON.stringify(objCompare[key])) {
-                    objDiff[key] = obj[key];
-                }
-            });
-
-            return objDiff;
-        }
-
-        /**
-         * @param {String} search
-         * @returns {Object}
-         */
-
-    }, {
-        key: 'urlSearchToObj',
-        value: function urlSearchToObj(search) {
-            var pairs = search.substring(1).split('&'),
-                obj = {};
-            var pair = void 0,
-                i = void 0;
-
-            for (i in pairs) {
-                if (pairs[i] === '') {
-                    continue;
-                }
-
-                pair = pairs[i].split('=');
-                obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-            }
-
-            return obj;
-        }
-    }]);
-
-    return UtilHelper;
-}();
-
-exports.default = UtilHelper;
-
-/***/ }),
+/* 4 */,
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -283,9 +299,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.applyBindings = applyBindings;
 
-var _observer = __webpack_require__(2);
+var _observer = __webpack_require__(3);
 
-var _utilHelper = __webpack_require__(4);
+var _utilHelper = __webpack_require__(2);
 
 var _utilHelper2 = _interopRequireDefault(_utilHelper);
 
@@ -2572,15 +2588,15 @@ __webpack_require__(9);
 
 var _binder = __webpack_require__(5);
 
-var _observer = __webpack_require__(2);
+var _observer = __webpack_require__(3);
 
-var _xid = __webpack_require__(25);
+var _xid = __webpack_require__(26);
 
 var _constants = __webpack_require__(21);
 
 var _constants2 = _interopRequireDefault(_constants);
 
-var _helpers = __webpack_require__(24);
+var _helpers = __webpack_require__(25);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -2773,7 +2789,8 @@ exports.default = {
 /***/ }),
 /* 22 */,
 /* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2840,7 +2857,7 @@ var DomHelper = function () {
 exports.default = DomHelper;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2877,7 +2894,7 @@ function doInitXID() {
         client_id: 'xIDBank',
         client_type: '',
         scope: 'openid standard_bankid',
-        noStepup: false,
+        unsolicited: false,
         method: 'inline',
         redirect_uri: '{data_xidOauthRedirectUri}',
         oauth_url: '{data_xidOauthEndpoint}',
@@ -2946,12 +2963,12 @@ exports.doLogoutFromXID = doLogoutFromXID;
 exports.doInitXID = doInitXID;
 
 /***/ }),
-/* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

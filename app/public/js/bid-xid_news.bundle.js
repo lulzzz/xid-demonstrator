@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 32);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -660,7 +660,7 @@ var DomHelper = function () {
                 var xhr = new (window.XMLHttpRequest || window.ActiveXObject)('MSXML2.XMLHTTP.3.0');
                 xhr.open(method, url, 1);
                 xhr.withCredentials = true;
-                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                // xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' ); // TODO Removed because it sends an OPTION request before the request, is this needed? I think so for some servers.
                 xhr.setRequestHeader('Content-type', contentType);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState > 3) {
@@ -676,6 +676,13 @@ var DomHelper = function () {
                 callback({ error: e });
             }
         }
+    }, {
+        key: 'openWindow',
+        value: function openWindow(width, height, href) {
+            var left = window.screen.width / 2 - width / 2;
+            var top = window.screen.height / 2 - height / 2;
+            window.open(href, 'newwindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+        }
     }]);
 
     return DomHelper;
@@ -685,6 +692,102 @@ exports.default = DomHelper;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UtilHelper = function () {
+    function UtilHelper() {
+        _classCallCheck(this, UtilHelper);
+    }
+
+    _createClass(UtilHelper, null, [{
+        key: 'parseJSON',
+        value: function parseJSON(str) {
+            var fixedJSON = str.replace(/:\s*"([^"]*)"/g, function (match, p1) {
+                return ': "' + p1.replace(/:/g, '@colon@') + '"';
+            }).replace(/:\s*'([^']*)'/g, function (match, p1) {
+                return ': "' + p1.replace(/:/g, '@colon@') + '"';
+            }).replace(/(['"])?([!a-z0-9A-Z_\-]+)(['"])?\s*:/g, '"$2": ').replace(/@colon@/g, ':').replace(/(\r\n|\n|\r)/gm, '');
+            return JSON.parse(fixedJSON);
+        }
+    }, {
+        key: 'objDiff',
+        value: function objDiff(obj, objCompare) {
+            var objDiff = {};
+
+            if (!obj) {
+                return objDiff;
+            }
+
+            Object.keys(obj).forEach(function (key) {
+                if (JSON.stringify(obj[key]) !== JSON.stringify(objCompare[key])) {
+                    objDiff[key] = obj[key];
+                }
+            });
+
+            return objDiff;
+        }
+
+        /**
+         * @param {String} search
+         * @returns {Object}
+         */
+
+    }, {
+        key: 'urlSearchToObj',
+        value: function urlSearchToObj(search) {
+            var pairs = search.substring(1).split('&'),
+                obj = {};
+            var pair = void 0,
+                i = void 0;
+
+            for (i in pairs) {
+                if (pairs[i] === '') {
+                    continue;
+                }
+
+                pair = pairs[i].split('=');
+                obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            }
+
+            return obj;
+        }
+
+        /**
+         * @param {Object} obj
+         * @returns {Boolean} True if all values in obj are false ish
+         */
+
+    }, {
+        key: 'isObjectEmpty',
+        value: function isObjectEmpty(obj) {
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key) && (obj[key] || obj[key] === false)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }]);
+
+    return UtilHelper;
+}();
+
+exports.default = UtilHelper;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -775,7 +878,7 @@ function isObservable(obj) {
 }
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -831,86 +934,6 @@ var ToastHelper = function () {
 exports.default = ToastHelper;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var UtilHelper = function () {
-    function UtilHelper() {
-        _classCallCheck(this, UtilHelper);
-    }
-
-    _createClass(UtilHelper, null, [{
-        key: 'parseJSON',
-        value: function parseJSON(str) {
-            var fixedJSON = str.replace(/:\s*"([^"]*)"/g, function (match, p1) {
-                return ': "' + p1.replace(/:/g, '@colon@') + '"';
-            }).replace(/:\s*'([^']*)'/g, function (match, p1) {
-                return ': "' + p1.replace(/:/g, '@colon@') + '"';
-            }).replace(/(['"])?([!a-z0-9A-Z_\-]+)(['"])?\s*:/g, '"$2": ').replace(/@colon@/g, ':');
-
-            return JSON.parse(fixedJSON);
-        }
-    }, {
-        key: 'objDiff',
-        value: function objDiff(obj, objCompare) {
-            var objDiff = {};
-
-            if (!obj) {
-                return objDiff;
-            }
-
-            Object.keys(obj).forEach(function (key) {
-                if (JSON.stringify(obj[key]) !== JSON.stringify(objCompare[key])) {
-                    objDiff[key] = obj[key];
-                }
-            });
-
-            return objDiff;
-        }
-
-        /**
-         * @param {String} search
-         * @returns {Object}
-         */
-
-    }, {
-        key: 'urlSearchToObj',
-        value: function urlSearchToObj(search) {
-            var pairs = search.substring(1).split('&'),
-                obj = {};
-            var pair = void 0,
-                i = void 0;
-
-            for (i in pairs) {
-                if (pairs[i] === '') {
-                    continue;
-                }
-
-                pair = pairs[i].split('=');
-                obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-            }
-
-            return obj;
-        }
-    }]);
-
-    return UtilHelper;
-}();
-
-exports.default = UtilHelper;
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -927,9 +950,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.applyBindings = applyBindings;
 
-var _observer = __webpack_require__(2);
+var _observer = __webpack_require__(3);
 
-var _utilHelper = __webpack_require__(4);
+var _utilHelper = __webpack_require__(2);
 
 var _utilHelper2 = _interopRequireDefault(_utilHelper);
 
@@ -3431,17 +3454,19 @@ exports.handleXIDLogin = exports.isUserLoggedIn = exports.doInit = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 __webpack_require__(9);
 
 var _binder = __webpack_require__(5);
 
-var _observer = __webpack_require__(2);
+var _observer = __webpack_require__(3);
 
 var _domHelper = __webpack_require__(1);
 
 var _domHelper2 = _interopRequireDefault(_domHelper);
 
-var _toastHelper = __webpack_require__(3);
+var _toastHelper = __webpack_require__(4);
 
 var _toastHelper2 = _interopRequireDefault(_toastHelper);
 
@@ -3453,9 +3478,13 @@ var _constants = __webpack_require__(22);
 
 var _constants2 = _interopRequireDefault(_constants);
 
-var _store = __webpack_require__(26);
+var _store = __webpack_require__(23);
 
 var _xid = __webpack_require__(27);
+
+var _jwtHelper = __webpack_require__(30);
+
+var _jwtHelper2 = _interopRequireDefault(_jwtHelper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3502,7 +3531,7 @@ var adsVm = (0, _observer.observable)({
 function getUserPlace() {
     var user = (0, _store.getLoggedInUser)();
     if (user) {
-        return user.address && user.address.locality || 'Oslo';
+        return user.address && user.address.locality || 'Bergen';
     } else {
         return 'Bergen';
     }
@@ -3517,7 +3546,7 @@ function isUserLoggedIn() {
  */
 function handleXIDLogin(user) {
     console.log('handleXIDLogin', user);
-    (0, _store.doStoreUser)(user);
+    (0, _store.setLoggedInUser)(user);
 
     if (user) {
         loginButtonElement.disabled = true;
@@ -3538,6 +3567,33 @@ function handleXIDLogin(user) {
     }
 
     doUpdateContent();
+}
+
+function doXIDConnectCallback(err, accessToken) {
+    console.log('doConnectCallback', accessToken);
+    if (err) {
+        console.error('doLoginWithXID', err);
+        if (isUserLoggedIn()) {
+            handleXIDLogin(null);
+        }
+    } else {
+        if (accessToken && (typeof accessToken === 'undefined' ? 'undefined' : _typeof(accessToken)) === "object") {
+            var tokenData = _jwtHelper2.default.parse(accessToken.id_token);
+            var user = (0, _store.getStoredUser)(tokenData.sub);
+
+            if (user !== null) {
+                // Call handler for logging in user (display specialized stories etc.)
+                handleXIDLogin(user || null);
+
+                // Update user info for this user
+                (0, _store.doStoreUser)(user);
+            } else {
+                (0, _xid.doGetUserInfoXID)();
+            }
+        } else {
+            (0, _xid.doGetUserInfoXID)();
+        }
+    }
 }
 
 function doUpdateContent() {
@@ -3671,11 +3727,11 @@ function doInit() {
     var logoutButtonElement = document.querySelector('#logout-button');
     var switchUserButtonElement = document.querySelector('#switch-user-button');
 
-    loginButtonElement.addEventListener('click', _xid.doLoginWithXID, false);
+    loginButtonElement.addEventListener('click', _xid.onXIDClick.bind(null, doXIDConnectCallback), false);
     logoutButtonElement.addEventListener('click', _xid.doLogoutFromXID, false);
-    switchUserButtonElement.addEventListener('click', _xid.doSwitchUserXID, false);
+    switchUserButtonElement.addEventListener('click', _xid.doSwitchUserXID.bind(null, doXIDConnectCallback), false);
 
-    document.body.addEventListener('xid-loaded', _xid.onXIDLoaded, false);
+    document.body.addEventListener('xid-loaded', _xid.onXIDLoaded.bind(null, doXIDConnectCallback), false);
 }
 
 exports.doInit = doInit;
@@ -3694,7 +3750,8 @@ exports.handleXIDLogin = handleXIDLogin;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var STORAGE_KEY_USER = 'xid-news-user';
+var STORAGE_KEY_USERS = 'xid-news-users';
+var STORAGE_KEY_LOGGED_IN_USER = 'xid-news-user-logged-in';
 var NEWS = {
     default: {
         main: [{
@@ -3842,13 +3899,10 @@ var WEATHER = {
     }
 };
 
-exports.default = { ADS: ADS, NEWS: NEWS, WEATHER: WEATHER, WEATHER_ICON: WEATHER_ICON, WEATHER_YAHOO_CODE: WEATHER_YAHOO_CODE, STORAGE_KEY_USER: STORAGE_KEY_USER };
+exports.default = { ADS: ADS, NEWS: NEWS, WEATHER: WEATHER, WEATHER_ICON: WEATHER_ICON, WEATHER_YAHOO_CODE: WEATHER_YAHOO_CODE, STORAGE_KEY_USERS: STORAGE_KEY_USERS, STORAGE_KEY_LOGGED_IN_USER: STORAGE_KEY_LOGGED_IN_USER };
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3857,7 +3911,7 @@ exports.default = { ADS: ADS, NEWS: NEWS, WEATHER: WEATHER, WEATHER_ICON: WEATHE
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getLoggedInUser = exports.doStoreUser = undefined;
+exports.isUserDataSet = exports.setLoggedInUser = exports.getLoggedInUser = exports.getStoredUser = exports.doStoreUser = undefined;
 
 var _constants = __webpack_require__(22);
 
@@ -3866,28 +3920,78 @@ var _constants2 = _interopRequireDefault(_constants);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * Set logged in user data in temporary session storage.
+ *
+ * @param user
+ */
+function setLoggedInUser(user) {
+    if (user) {
+        window.sessionStorage.setItem(_constants2.default.STORAGE_KEY_LOGGED_IN_USER, JSON.stringify(user));
+    } else {
+        window.sessionStorage.removeItem(_constants2.default.STORAGE_KEY_LOGGED_IN_USER);
+    }
+}
+
+/**
+ * Fetch logged in user data from temporary session storage.
+ *
  * @returns {BIDXidConnect.UserInfo|null}
  */
 function getLoggedInUser() {
     try {
-        return JSON.parse(window.sessionStorage.getItem(_constants2.default.STORAGE_KEY_USER)) || null;
+        return JSON.parse(window.sessionStorage.getItem(_constants2.default.STORAGE_KEY_LOGGED_IN_USER)) || null;
     } catch (e) {
         return null;
     }
 }
 
+/**
+ * Store user data in long-term storage mocking persistant storage such as a database.
+ * The user data stores the user by the `sub` identifier in the user object.
+ * @param user
+ */
 function doStoreUser(user) {
     if (user) {
-        window.sessionStorage.setItem(_constants2.default.STORAGE_KEY_USER, JSON.stringify(user));
+        var users = JSON.parse(window.localStorage.getItem(_constants2.default.STORAGE_KEY_USERS)) || null;
+        if (!users) {
+            users = {};
+        }
+        users[user.sub] = user;
+        window.localStorage.setItem(_constants2.default.STORAGE_KEY_USERS, JSON.stringify(users));
     } else {
-        window.sessionStorage.removeItem(_constants2.default.STORAGE_KEY_USER);
+        window.localStorage.removeItem(_constants2.default.STORAGE_KEY_USERS);
     }
 }
 
+/**
+ * Return the stored user data by passing the `sub` ID from tokens.
+ * @returns {BIDXidConnect.UserInfo|null}
+ */
+function getStoredUser(sub) {
+    try {
+        return JSON.parse(window.localStorage.getItem(_constants2.default.STORAGE_KEY_USERS))[sub] || null;
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * Returns true if stored user data exists.
+ */
+function isUserDataSet() {
+    return window.localStorage.getItem(_constants2.default.STORAGE_KEY_USERS) !== null;
+}
+
 exports.doStoreUser = doStoreUser;
+exports.getStoredUser = getStoredUser;
 exports.getLoggedInUser = getLoggedInUser;
+exports.setLoggedInUser = setLoggedInUser;
+exports.isUserDataSet = isUserDataSet;
 
 /***/ }),
+/* 24 */,
+/* 25 */,
+/* 26 */,
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3897,23 +4001,45 @@ exports.getLoggedInUser = getLoggedInUser;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.onXIDLoaded = exports.doLogoutFromXID = exports.doSwitchUserXID = exports.doLoginWithXID = undefined;
+exports.onXIDClick = exports.onXIDLoaded = exports.doGetUserInfoXID = exports.doLogoutFromXID = exports.doSwitchUserXID = exports.doLoginWithXID = undefined;
 
 var _app = __webpack_require__(19);
 
-var _toastHelper = __webpack_require__(3);
+var _store = __webpack_require__(23);
+
+var _toastHelper = __webpack_require__(4);
 
 var _toastHelper2 = _interopRequireDefault(_toastHelper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function onXIDLoaded() {
+var APPLICATION_NAME = 'nyhetsportal.no';
+
+function onXIDLoaded(doXIDConnectOnloadCallback) {
     var loginButtonElement = document.querySelector('#login-button');
     loginButtonElement.disabled = false;
 
     doInitXID();
     if (!(0, _app.isUserLoggedIn)()) {
-        doLoginWithXID({ noStepup: true });
+        if ((0, _store.isUserDataSet)()) {
+            // User probably logged in before
+            doLoginWithXID(doXIDConnectOnloadCallback, { unsolicited: true, scope: 'openid standard_bankid' });
+        } else {
+            // First time for this user
+            doLoginWithXID(doXIDConnectOnloadCallback, { unsolicited: true });
+        }
+    }
+}
+
+function onXIDClick(doXIDConnectOnClickCallback) {
+    if (!(0, _app.isUserLoggedIn)()) {
+        if ((0, _store.isUserDataSet)()) {
+            // User probably logged in before
+            doLoginWithXID(doXIDConnectOnClickCallback, {}, APPLICATION_NAME);
+        } else {
+            // First time for this user
+            doLoginWithXID(doXIDConnectOnClickCallback, {}, APPLICATION_NAME);
+        }
     }
 }
 
@@ -3925,8 +4051,8 @@ function doInitXID() {
     window.XID.doInit({
         client_id: 'xIDNews',
         client_type: 'XID',
-        scope: 'openid phone address',
-        noStepup: false,
+        scope: 'openid standard_bankid phone address',
+        unsolicited: false,
         method: 'inline',
         redirect_uri: '{data_xidOauthRedirectUri}',
         oauth_url: '{data_xidOauthEndpoint}',
@@ -3935,31 +4061,38 @@ function doInitXID() {
     });
 }
 
-function doLoginWithXID() {
-    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+function doLoginWithXID(doConnectCallback) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var applicationName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
     if (!window.XID) {
         return console.warn('xID not loaded yet');
     }
-
+    console.log('applicationName', applicationName);
     window.XID.doConnect({
-        callback: function callback(err, accessToken) {
-            console.log('doConnectCallback', accessToken);
-            if (err) {
-                console.error('doLoginWithXID', err);
-                if ((0, _app.isUserLoggedIn)()) {
-                    (0, _app.handleXIDLogin)(null);
-                }
-            } else {
-                window.XID.doGetUserInfo(function (err, user) {
-                    return (0, _app.handleXIDLogin)(user || null);
-                });
-            }
-        },
+        callback: doConnectCallback,
         config: config,
         inlineElementID: 'authenticate-client',
-        inlineModalWindow: true
+        inlineModalWindow: true,
+        applicationName: applicationName,
+        onActionCallback: onAction
     });
+}
+
+function onAction(action) {
+    var modalElement = document.querySelector('[data-dialog=xid-login-modal] main');
+    var modalArticleElement = modalElement.querySelector('article');
+
+    if (modalElement) {
+        // Hack for the xID demonstrator with additional information support
+        if (action === 'add') {
+            modalElement.style.height = '750px';
+            modalArticleElement.style.height = '750px';
+        } else {
+            modalElement.style.height = '';
+            modalArticleElement.style.height = '';
+        }
+    }
 }
 
 function doLogoutFromXID() {
@@ -3975,24 +4108,95 @@ function doLogoutFromXID() {
     _toastHelper2.default.showToast(toastContainerElement, 'Logget ut');
 }
 
-function doSwitchUserXID() {
+function doSwitchUserXID(doXIDConnectCallback) {
     doLogoutFromXID();
     // Remove xID Cookie
     window.XID.doReset();
-    doLoginWithXID({ client_type: '' });
+    doLoginWithXID(doXIDConnectCallback);
+}
+
+function doGetUserInfoXID() {
+    window.XID.doGetUserInfo(handleUserInfoCallback);
+}
+
+function handleUserInfoCallback(err, user) {
+    // Call handler for logging in user (display specialized stories etc.)
+    (0, _app.handleXIDLogin)(user || null);
+
+    // Save user info for future reference
+    (0, _store.doStoreUser)(user);
 }
 
 exports.doLoginWithXID = doLoginWithXID;
 exports.doSwitchUserXID = doSwitchUserXID;
 exports.doLogoutFromXID = doLogoutFromXID;
+exports.doGetUserInfoXID = doGetUserInfoXID;
 exports.onXIDLoaded = onXIDLoaded;
+exports.onXIDClick = onXIDClick;
 
 /***/ }),
 /* 28 */,
 /* 29 */,
-/* 30 */,
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _utilHelper = __webpack_require__(2);
+
+var _utilHelper2 = _interopRequireDefault(_utilHelper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var JWTHelper = function () {
+    function JWTHelper() {
+        _classCallCheck(this, JWTHelper);
+    }
+
+    _createClass(JWTHelper, null, [{
+        key: 'parse',
+        value: function parse(token) {
+            if (token) {
+                var part = token.split('.')[1];
+                var decodedPart = JWTHelper.base64Decode(part);
+                try {
+                    return _utilHelper2.default.parseJSON(decodedPart) || {};
+                } catch (e) {
+                    console.error('Cannot parse: ' + decodedPart);
+                    console.trace(e);
+                }
+            } else {
+                return null;
+            }
+        }
+    }, {
+        key: 'base64Decode',
+        value: function base64Decode(str) {
+            // Going backwards: from bytestream, to percent-encoding, to original string.
+            return decodeURIComponent(atob(str).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
+    }]);
+
+    return JWTHelper;
+}();
+
+exports.default = JWTHelper;
+
+/***/ }),
 /* 31 */,
-/* 32 */
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

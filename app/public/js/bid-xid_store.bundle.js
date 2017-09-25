@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -660,7 +660,7 @@ var DomHelper = function () {
                 var xhr = new (window.XMLHttpRequest || window.ActiveXObject)('MSXML2.XMLHTTP.3.0');
                 xhr.open(method, url, 1);
                 xhr.withCredentials = true;
-                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                // xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' ); // TODO Removed because it sends an OPTION request before the request, is this needed? I think so for some servers.
                 xhr.setRequestHeader('Content-type', contentType);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState > 3) {
@@ -676,6 +676,13 @@ var DomHelper = function () {
                 callback({ error: e });
             }
         }
+    }, {
+        key: 'openWindow',
+        value: function openWindow(width, height, href) {
+            var left = window.screen.width / 2 - width / 2;
+            var top = window.screen.height / 2 - height / 2;
+            window.open(href, 'newwindow', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+        }
     }]);
 
     return DomHelper;
@@ -685,6 +692,102 @@ exports.default = DomHelper;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UtilHelper = function () {
+    function UtilHelper() {
+        _classCallCheck(this, UtilHelper);
+    }
+
+    _createClass(UtilHelper, null, [{
+        key: 'parseJSON',
+        value: function parseJSON(str) {
+            var fixedJSON = str.replace(/:\s*"([^"]*)"/g, function (match, p1) {
+                return ': "' + p1.replace(/:/g, '@colon@') + '"';
+            }).replace(/:\s*'([^']*)'/g, function (match, p1) {
+                return ': "' + p1.replace(/:/g, '@colon@') + '"';
+            }).replace(/(['"])?([!a-z0-9A-Z_\-]+)(['"])?\s*:/g, '"$2": ').replace(/@colon@/g, ':').replace(/(\r\n|\n|\r)/gm, '');
+            return JSON.parse(fixedJSON);
+        }
+    }, {
+        key: 'objDiff',
+        value: function objDiff(obj, objCompare) {
+            var objDiff = {};
+
+            if (!obj) {
+                return objDiff;
+            }
+
+            Object.keys(obj).forEach(function (key) {
+                if (JSON.stringify(obj[key]) !== JSON.stringify(objCompare[key])) {
+                    objDiff[key] = obj[key];
+                }
+            });
+
+            return objDiff;
+        }
+
+        /**
+         * @param {String} search
+         * @returns {Object}
+         */
+
+    }, {
+        key: 'urlSearchToObj',
+        value: function urlSearchToObj(search) {
+            var pairs = search.substring(1).split('&'),
+                obj = {};
+            var pair = void 0,
+                i = void 0;
+
+            for (i in pairs) {
+                if (pairs[i] === '') {
+                    continue;
+                }
+
+                pair = pairs[i].split('=');
+                obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            }
+
+            return obj;
+        }
+
+        /**
+         * @param {Object} obj
+         * @returns {Boolean} True if all values in obj are false ish
+         */
+
+    }, {
+        key: 'isObjectEmpty',
+        value: function isObjectEmpty(obj) {
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key) && (obj[key] || obj[key] === false)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }]);
+
+    return UtilHelper;
+}();
+
+exports.default = UtilHelper;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -775,7 +878,7 @@ function isObservable(obj) {
 }
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -831,86 +934,6 @@ var ToastHelper = function () {
 exports.default = ToastHelper;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var UtilHelper = function () {
-    function UtilHelper() {
-        _classCallCheck(this, UtilHelper);
-    }
-
-    _createClass(UtilHelper, null, [{
-        key: 'parseJSON',
-        value: function parseJSON(str) {
-            var fixedJSON = str.replace(/:\s*"([^"]*)"/g, function (match, p1) {
-                return ': "' + p1.replace(/:/g, '@colon@') + '"';
-            }).replace(/:\s*'([^']*)'/g, function (match, p1) {
-                return ': "' + p1.replace(/:/g, '@colon@') + '"';
-            }).replace(/(['"])?([!a-z0-9A-Z_\-]+)(['"])?\s*:/g, '"$2": ').replace(/@colon@/g, ':');
-
-            return JSON.parse(fixedJSON);
-        }
-    }, {
-        key: 'objDiff',
-        value: function objDiff(obj, objCompare) {
-            var objDiff = {};
-
-            if (!obj) {
-                return objDiff;
-            }
-
-            Object.keys(obj).forEach(function (key) {
-                if (JSON.stringify(obj[key]) !== JSON.stringify(objCompare[key])) {
-                    objDiff[key] = obj[key];
-                }
-            });
-
-            return objDiff;
-        }
-
-        /**
-         * @param {String} search
-         * @returns {Object}
-         */
-
-    }, {
-        key: 'urlSearchToObj',
-        value: function urlSearchToObj(search) {
-            var pairs = search.substring(1).split('&'),
-                obj = {};
-            var pair = void 0,
-                i = void 0;
-
-            for (i in pairs) {
-                if (pairs[i] === '') {
-                    continue;
-                }
-
-                pair = pairs[i].split('=');
-                obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-            }
-
-            return obj;
-        }
-    }]);
-
-    return UtilHelper;
-}();
-
-exports.default = UtilHelper;
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -927,9 +950,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.applyBindings = applyBindings;
 
-var _observer = __webpack_require__(2);
+var _observer = __webpack_require__(3);
 
-var _utilHelper = __webpack_require__(4);
+var _utilHelper = __webpack_require__(2);
 
 var _utilHelper2 = _interopRequireDefault(_utilHelper);
 
@@ -3432,7 +3455,7 @@ exports.doScrollToUser = exports.createUserFromXID = exports.doLoginUser = expor
 
 __webpack_require__(9);
 
-var _observer = __webpack_require__(2);
+var _observer = __webpack_require__(3);
 
 var _binder = __webpack_require__(5);
 
@@ -3440,21 +3463,25 @@ var _domHelper = __webpack_require__(1);
 
 var _domHelper2 = _interopRequireDefault(_domHelper);
 
-var _toastHelper = __webpack_require__(3);
+var _toastHelper = __webpack_require__(4);
 
 var _toastHelper2 = _interopRequireDefault(_toastHelper);
 
-var _product = __webpack_require__(30);
+var _product = __webpack_require__(31);
 
 var _product2 = _interopRequireDefault(_product);
 
-var _dialog = __webpack_require__(23);
+var _dialog = __webpack_require__(24);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
 var _popover = __webpack_require__(16);
 
 var _popover2 = _interopRequireDefault(_popover);
+
+var _utilHelper = __webpack_require__(2);
+
+var _utilHelper2 = _interopRequireDefault(_utilHelper);
 
 var _constants = __webpack_require__(28);
 
@@ -3464,16 +3491,15 @@ var _xid = __webpack_require__(29);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * @typedef {Object} User
- * @property {String} name
- * @property {String} email
- * @property {String} phone
- * @property {String} address
- * @property {String} post
- */
+var mainElement = document.querySelector('.main'); /**
+                                                    * @typedef {Object} User
+                                                    * @property {String} name
+                                                    * @property {String} email
+                                                    * @property {String} phone
+                                                    * @property {String} address
+                                                    * @property {String} post
+                                                    */
 
-var mainElement = document.querySelector('.main');
 var productsPageElement = document.querySelector('.page[data-page=products]');
 var toastContainerElement = document.querySelector('.toast-wrapper');
 
@@ -3522,14 +3548,13 @@ function createUserFromXID(userInfo) {
     var postal_address = '';
     if (getAddress().postal_code && getAddress().locality) {
         postal_address = getAddress().postal_code + ' ' + getAddress().locality;
-    } else {
-        postal_address = '0100 Oslo';
     }
+
     return {
         name: userInfo.name,
-        email: userInfo.email || (userInfo.given_name + '.' + userInfo.family_name).replace(' ', '.').toLowerCase() + '@xid.bankidnorge.no',
-        phone: userInfo.phone_number || '90123456',
-        address: getAddress().street_address || 'Hjemmeveien 115',
+        email: userInfo.email || '',
+        phone: userInfo.phone_number || '',
+        address: getAddress().street_address || '',
         post: postal_address
     };
 }
@@ -3739,7 +3764,8 @@ exports.doScrollToUser = doScrollToUser;
 /***/ }),
 /* 21 */,
 /* 22 */,
-/* 23 */
+/* 23 */,
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3903,7 +3929,6 @@ var Dialog = function () {
 exports.default = Dialog;
 
 /***/ }),
-/* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
@@ -3935,9 +3960,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.onXIDLoaded = exports.doLogoutFromXID = exports.doSwitchUserXID = exports.doLoginWithXID = undefined;
 
-var _toastHelper = __webpack_require__(3);
+var _toastHelper = __webpack_require__(4);
 
 var _toastHelper2 = _interopRequireDefault(_toastHelper);
+
+var _utilHelper = __webpack_require__(2);
+
+var _utilHelper2 = _interopRequireDefault(_utilHelper);
 
 var _app = __webpack_require__(20);
 
@@ -3953,8 +3982,8 @@ function onXIDLoaded() {
     window.XID.doInit({
         client_id: 'xIDStore',
         client_type: 'XID',
-        scope: 'openid email phone address',
-        noStepup: false,
+        scope: 'openid standard_bankid email phone address',
+        unsolicited: false,
         forceClientPrompt: false,
         redirect_uri: '{data_xidOauthRedirectUri}',
         oauth_url: '{data_xidOauthEndpoint}',
@@ -3971,11 +4000,9 @@ function doLogoutFromXID() {
 
 function doSwitchUserXID() {
     doLogoutFromXID();
-
-    // Remove xID Cookie
+    // FIXME Removes xID Cookie but should not be able to.
     window.XID.doReset();
-
-    doLoginWithXID({ client_type: '', forceClientPrompt: true });
+    doLoginWithXID();
 }
 
 function doLoginWithXID() {
@@ -4003,7 +4030,8 @@ function doLoginWithXID() {
                 });
             }
         },
-        config: config
+        config: config,
+        applicationName: 'nettbutikk.no'
     });
 }
 
@@ -4013,7 +4041,8 @@ exports.doLogoutFromXID = doLogoutFromXID;
 exports.onXIDLoaded = onXIDLoaded;
 
 /***/ }),
-/* 30 */
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4079,9 +4108,9 @@ var ProductStore = function () {
 exports.default = ProductStore;
 
 /***/ }),
-/* 31 */,
 /* 32 */,
-/* 33 */
+/* 33 */,
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
